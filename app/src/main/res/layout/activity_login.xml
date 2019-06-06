@@ -63,7 +63,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="16dp"
-        android:visibility="invisible"
+
 
         android:background="@drawable/facebook_login"
         />

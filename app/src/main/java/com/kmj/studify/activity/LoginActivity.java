@@ -6,26 +6,27 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.kmj.studify.LoginCallback;
 import com.kmj.studify.R;
 
-import org.json.JSONObject;
+import java.util.Arrays;
 
 
 public class LoginActivity extends AppCompatActivity {
     private LoginButton btn_facebook_login;
-
-
+    private Button custom_login_btn;
+    private LoginCallback mLoginCallback;
     private CallbackManager mCallbackManager;
 
     @Override
@@ -41,27 +42,17 @@ public class LoginActivity extends AppCompatActivity {
         }
         btn_facebook_login = findViewById(R.id.login_button);
         mCallbackManager = CallbackManager.Factory.create();
-
-
-        LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-            @Override //성공후 엑세스토큰 발급받음
-            public void onSuccess(LoginResult loginResult) {
-                requestMe(loginResult.getAccessToken());
-
-
-            }
-
-            @Override //로그인 창을 닫을경우
-            public void onCancel() {
-                Log.e("Callback :: ", "onCancel");
-            }
-
-            @Override //로그인 실패 할경우
-            public void onError(FacebookException error) {
-                Log.e("Callback :: ", "onError : " + error.getMessage());
+        mLoginCallback = new LoginCallback();
+        custom_login_btn=findViewById(R.id.custom_login_button);
+        custom_login_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_facebook_login.performClick();
             }
         });
 
+
+        btn_facebook_login.registerCallback(mCallbackManager, mLoginCallback);
 
     }
 
@@ -70,35 +61,6 @@ public class LoginActivity extends AppCompatActivity {
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
-    // 사용자 정보 요청
 
-    // 사용자 정보 요청
-
-    public void requestMe(AccessToken token) {
-
-        GraphRequest graphRequest = GraphRequest.newMeRequest(token,
-
-                new GraphRequest.GraphJSONObjectCallback() {
-
-                    @Override
-
-                    public void onCompleted(JSONObject object, GraphResponse response) {
-
-                        Log.e("result", object.toString());
-
-                    }
-
-                });
-
-
-        Bundle parameters = new Bundle();
-
-        parameters.putString("fields", "id,name,email,gender,birthday");
-
-        graphRequest.setParameters(parameters);
-
-        graphRequest.executeAsync();
-
-    }
 }
 
