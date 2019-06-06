@@ -5,41 +5,79 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#2d4b74"
-    tools:context=".LoginActivity">
+    tools:context=".activity.LoginActivity">
+
     <ImageView
+        android:id="@+id/login_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="164dp"
         android:src="@drawable/applogo"
-        android:id="@+id/login_iv"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_iv"
-        android:text="Studify?"
-        android:layout_marginTop="8dp"
-        android:textColor="#fff"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/login_tv1"
-        android:fontFamily="@font/roboto_medium"
-        android:textSize="30sp"
-        />
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumgothic_regular"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Studify?"
+        android:textColor="#fff"
+        android:textSize="30sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_tv1"
-        android:textColor="#FFF"
-        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/login_iv" />
+
+    <TextView
+        android:id="@+id/login_tv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/nanumgothic_regular"
         android:gravity="center"
         android:text="Studify는\n효율적인 학습 및 집중력 향상과\n공부 자극을 도와주는 솔루션입니다.\n애플리케이션을 통해 사용자에게\n다양한 기능을 제공합니다."
+        android:textColor="#FFF"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_tv1" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_width="258dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_tv2"
+        android:layout_marginTop="16dp"
+
+        tools:ignore="MissingConstraints" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/custom_login_button"
+        app:layout_constraintTop_toBottomOf="@id/login_tv2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="16dp"
+        android:visibility="invisible"
+
+        android:background="@drawable/facebook_login"
+        />
+    <Button
+        android:layout_width="258dp"
+        android:layout_height="44dp"
+        android:background="#81d1f2"
+        android:id="@+id/login_guestbtn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="게스트 로그인"
+        android:textColor="#fff"
+        android:fontFamily="@font/nanumgothic_regular"
+        app:layout_constraintTop_toBottomOf="@id/custom_login_button"
         />
 </android.support.constraint.ConstraintLayout>

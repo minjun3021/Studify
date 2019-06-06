@@ -1,9 +1,11 @@
-package com.kmj.studify;
+package com.kmj.studify.activity;
 
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.kmj.studify.R;
 
 public class SplashActivity extends AppCompatActivity {
 
