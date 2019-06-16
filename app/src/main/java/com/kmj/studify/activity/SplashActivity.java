@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import com.kmj.studify.R;
 
-public class SplashActivity extends AppCompatActivity {
+public class  SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

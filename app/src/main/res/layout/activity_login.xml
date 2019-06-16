@@ -11,6 +11,7 @@
         android:id="@+id/login_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="164dp"
         android:src="@drawable/applogo"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -49,35 +50,59 @@
         android:layout_width="258dp"
         android:layout_height="44dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_tv2"
-        android:layout_marginTop="16dp"
 
         tools:ignore="MissingConstraints" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/custom_login_button"
-        app:layout_constraintTop_toBottomOf="@id/login_tv2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="16dp"
-
-
-        android:background="@drawable/facebook_login"
-        />
-    <Button
         android:layout_width="258dp"
         android:layout_height="44dp"
-        android:background="#81d1f2"
-        android:id="@+id/login_guestbtn"
+        android:layout_marginTop="16dp"
+
+        android:background="#fff"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="8dp"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_tv2">
+
+        <ImageView
+            android:id="@+id/custom_login_button_img"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginLeft="65dp"
+            android:src="@drawable/facebook"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanumgothic_bold"
+            android:text="페이스북 로그인"
+            android:textColor="#23589b"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/custom_login_button_img"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <Button
+        android:id="@+id/login_guestbtn"
+        android:layout_width="258dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="8dp"
+        android:background="#81d1f2"
+        android:fontFamily="@font/nanumgothic_bold"
         android:text="게스트 로그인"
         android:textColor="#fff"
-        android:fontFamily="@font/nanumgothic_regular"
-        app:layout_constraintTop_toBottomOf="@id/custom_login_button"
-        />
+
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/custom_login_button" />
 </android.support.constraint.ConstraintLayout>

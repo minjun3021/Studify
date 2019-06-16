@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:text="공부 유도를 위한 솔루션"
+        android:text="공부를 공유하다"
         android:fontFamily="@font/nanumgothic_regular"
         android:textColor="#fff"
         android:textSize="15sp"

@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Studify</string>
-    <string name="facebook_app_id">415195429034506</string> <string name="fb_login_protocol_scheme">fb415195429034506</string>
+    <string name="facebook_app_id">415195429034506</string>
+    <string name="fb_login_protocol_scheme">fb415195429034506</string>
     <string name="facebook_app_key">415195429034506</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
