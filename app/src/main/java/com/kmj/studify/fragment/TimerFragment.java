@@ -18,6 +18,7 @@ public class TimerFragment extends Fragment {
     TextView hour, minute, second;
     Button start;
     Handler mHandler;
+    boolean isStarted=false;
     int hours = 0, minutes = 0, seconds = 0;
 
     public static TimerFragment newInstance() {
@@ -59,7 +60,11 @@ public class TimerFragment extends Fragment {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mHandler.sendEmptyMessage(0);
+                if(isStarted==false){
+                    mHandler.sendEmptyMessage(0);
+                    isStarted=true;
+                }
+
             }
         });
 

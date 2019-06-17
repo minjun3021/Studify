@@ -88,7 +88,7 @@ guest=findViewById(R.id.login_guestbtn);
         String name=pref.getString("name", "");
         String facebookId=pref.getString("facebookId", "");
         String profileURL=pref.getString("profileURL", "");
-        NetworkHelper.getInstance().Register(name,facebookId+"12",profileURL).enqueue(new Callback<RegisterModel>() {
+        NetworkHelper.getInstance().Register(name,facebookId,profileURL).enqueue(new Callback<RegisterModel>() {
             @Override
             public void onResponse(Call<RegisterModel> call, Response<RegisterModel> response) {
                 Log.e("mymyToken",response.body().getUserModel().getToken());
