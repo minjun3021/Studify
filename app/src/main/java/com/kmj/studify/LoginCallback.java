@@ -26,7 +26,7 @@ public class LoginCallback implements FacebookCallback<LoginResult> {
     public void onSuccess(LoginResult loginResult) {
 
         Log.e("Callback :: ", "onSuccess");
-
+        getMyInformation(loginResult.getAccessToken());
         requestMe(loginResult.getAccessToken());
         if (BuildConfig.DEBUG) {
             FacebookSdk.setIsDebugEnabled(true);
@@ -62,8 +62,7 @@ public class LoginCallback implements FacebookCallback<LoginResult> {
 
     // 사용자 정보 요청
 
-    public void requestMe(final AccessToken token) {
-
+    public static void requestMe(final AccessToken token) {
         GraphRequest request = GraphRequest.newMeRequest(token, new GraphRequest.GraphJSONObjectCallback() {
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
@@ -78,32 +77,24 @@ public class LoginCallback implements FacebookCallback<LoginResult> {
                             public void onCompleted(GraphResponse response) {
 
                                 try {
-                                    Log.e("Fucking",response.toString());
+
                                     JSONArray rawName = response.getJSONObject().getJSONArray("data");
-                                    Log.e("Json Array Length ","Json Array Length "+rawName.length());
-                                    Log.e("Json Array","Json Array "+rawName.toString());
+                                    Log.e("Json Array Length ", "Json Array Length " + rawName.length());
+                                    Log.e("Json Array", "Json Array " + rawName.toString());
 
 
                                     for (int i = 0; i < rawName.length(); i++) {
                                         JSONObject c = rawName.getJSONObject(i);
 
 
-
-
                                         String name = c.getString("name");
-                                        Log.e("JSON NAME :", "JSON NAME :"+name);
+                                        Log.e("Friends's Name", "JSON NAME :" + name);
 
-                                        JSONObject phone = c.getJSONObject("picture");
-                                        Log.e("phone",""+phone.getString("data"));
-
-                                        JSONObject jsonObject = phone.getJSONObject("data");
-
-                                        String url = jsonObject.getString("url").toString();
-                                        Log.e("asdf","@@@@"+jsonObject.getString("url").toString());
+                                        String id = c.getString("id");
+                                        Log.e("Friends's ID :", name+"'s ID:" + id);
 
 
                                     }
-
 
 
                                 } catch (JSONException e) {
@@ -115,17 +106,33 @@ public class LoginCallback implements FacebookCallback<LoginResult> {
                 ).executeAsync();
 
 
-
             }
 
 
+        });
 
-    });
 
-
-    Bundle parameters = new Bundle();
-    parameters.putString("fields", "id,name,link,email,picture");
-    request.setParameters(parameters);
-    request.executeAsync();
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,profile_pic");
+        request.setParameters(parameters);
+        request.executeAsync();
+    }
+    public static void getMyInformation(AccessToken accessToken){
+        GraphRequest request = GraphRequest.newMeRequest(
+                accessToken,
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(
+                            JSONObject object,
+                            GraphResponse response) {
+                        // Application code
+                        Log.e("MyinFor",response.toString());
+                    }
+                });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,link");
+        request.setParameters(parameters);
+        request.executeAsync();
     }
 }
+

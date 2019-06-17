@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
     public void login() {
         LoginManager.getInstance().logInWithReadPermissions(
                 this
-                , Arrays.asList("public_profile","user_friends","email"));  // 필요한 권한들 요청하기
+                , Arrays.asList("public_profile","user_friends","email",""));  // 필요한 권한들 요청하기
     }
 
     @Override
