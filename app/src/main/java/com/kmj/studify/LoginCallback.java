@@ -77,7 +77,7 @@ public class LoginCallback implements FacebookCallback<LoginResult> {
                             public void onCompleted(GraphResponse response) {
 
                                 try {
-
+                                    Log.e("Json Array", response.toString());
                                     JSONArray rawName = response.getJSONObject().getJSONArray("data");
                                     Log.e("Json Array Length ", "Json Array Length " + rawName.length());
                                     Log.e("Json Array", "Json Array " + rawName.toString());
@@ -127,6 +127,16 @@ public class LoginCallback implements FacebookCallback<LoginResult> {
                             GraphResponse response) {
                         // Application code
                         Log.e("MyinFor",response.toString());
+                        try {
+                            Log.e("Myname",object.getString("name"));
+                            Log.e("Myid",object.getString("id"));
+
+
+
+                        } catch (JSONException e) {
+
+                            e.printStackTrace();
+                        }
                     }
                 });
         Bundle parameters = new Bundle();
