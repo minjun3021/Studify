@@ -58,19 +58,7 @@ guest=findViewById(R.id.login_guestbtn);
         guest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                LoginManager.getInstance().logOut();
-                NetworkHelper.getInstance().Register("1112sadf323","1231231sadf23213","121212d3332").enqueue(new Callback<RegisterModel>() {
-                    @Override
-                    public void onResponse(Call<RegisterModel> call, Response<RegisterModel> response) {
-                        Log.e("RetroFit",response.body().getUserModel().getToken());
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<RegisterModel> call, Throwable t) {
-
-                    }
-                });
+                LoginManager.getInstance().logOut();
 
             }
         });
@@ -96,6 +84,24 @@ guest=findViewById(R.id.login_guestbtn);
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        String name=pref.getString("name", "");
+        String facebookId=pref.getString("facebookId", "");
+        String profileURL=pref.getString("profileURL", "");
+        NetworkHelper.getInstance().Register(name,facebookId+"12",profileURL).enqueue(new Callback<RegisterModel>() {
+            @Override
+            public void onResponse(Call<RegisterModel> call, Response<RegisterModel> response) {
+                Log.e("mymyToken",response.body().getUserModel().getToken());
+            }
+
+            @Override
+            public void onFailure(Call<RegisterModel> call, Throwable t) {
+
+            }
+        });
+
+
+
 
         super.onActivityResult(requestCode, resultCode, data);
     }
