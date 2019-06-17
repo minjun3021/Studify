@@ -59,7 +59,7 @@ guest=findViewById(R.id.login_guestbtn);
             @Override
             public void onClick(View v) {
 //                LoginManager.getInstance().logOut();
-                NetworkHelper.getInstance().Register("1112323","123123123213","1212123332").enqueue(new Callback<RegisterModel>() {
+                NetworkHelper.getInstance().Register("1112sadf323","1231231sadf23213","121212d3332").enqueue(new Callback<RegisterModel>() {
                     @Override
                     public void onResponse(Call<RegisterModel> call, Response<RegisterModel> response) {
                         Log.e("RetroFit",response.body().getUserModel().getToken());
