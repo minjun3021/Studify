@@ -2,15 +2,21 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#fff"
     android:layout_height="match_parent"
     tools:context=".fragment.FriendsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <Button
         android:layout_width="match_parent"
-        android:textColor="#000"
-        android:layout_height="match_parent"
-        android:text="friends" />
+        android:layout_height="wrap_content"
+        android:text="Hello"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/friends_btn"
+
+        />
 
 </android.support.constraint.ConstraintLayout>

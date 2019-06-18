@@ -36,7 +36,6 @@ public class LoginCallback implements FacebookCallback<LoginResult> {
 
         Log.e("Callback :: ", "onSuccess");
         getMyInformation(loginResult.getAccessToken(),context);
-        requestMe(loginResult.getAccessToken());
         if (BuildConfig.DEBUG) {
             FacebookSdk.setIsDebugEnabled(true);
             FacebookSdk.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
@@ -71,61 +70,7 @@ public class LoginCallback implements FacebookCallback<LoginResult> {
 
     // 사용자 정보 요청
 
-    public static void requestMe(final AccessToken token) {
-        GraphRequest request = GraphRequest.newMeRequest(token, new GraphRequest.GraphJSONObjectCallback() {
-            @Override
-            public void onCompleted(JSONObject object, GraphResponse response) {
-                new GraphRequest(
-                        token,
-                        // "/me/friends",
-                        //"me/taggable_friends",
-                        "/me/friends",
-                        null,
-                        HttpMethod.GET,
-                        new GraphRequest.Callback() {
-                            public void onCompleted(GraphResponse response) {
 
-                                try {
-
-                                    JSONArray rawName = response.getJSONObject().getJSONArray("data");
-                                    Log.e("Json Array Length ", "Json Array Length " + rawName.length());
-                                    Log.e("Json Array", "Json Array " + rawName.toString());
-
-
-                                    for (int i = 0; i < rawName.length(); i++) {
-                                        JSONObject c = rawName.getJSONObject(i);
-
-
-                                        String name = c.getString("name");
-                                        Log.e("Friends's Name", "JSON NAME :" + name);
-
-                                        String id = c.getString("id");
-                                        Log.e("Friends's ID :", name+"'s ID:" + id);
-
-
-                                    }
-
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                            }
-                        }
-                ).executeAsync();
-
-
-            }
-
-
-        });
-
-
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,profile_pic");
-        request.setParameters(parameters);
-        request.executeAsync();
-    }
     public static void getMyInformation(AccessToken accessToken, final Context context){
         GraphRequest request = GraphRequest.newMeRequest(
                 accessToken,

@@ -25,8 +25,13 @@ public interface NetworkInterface {
     @POST("/user/end")
     @FormUrlEncoded
     Call<EndModel> End(@Field("token")String token);
+
     @POST("/user/ranking")
     Call<ArrayList<UserModel>> Ranking();
+
+    @POST("/user/friend/ranking")
+    @FormUrlEncoded
+    Call<ArrayList<UserModel>> FriendsRanking(@Field("ids")String ids);
 
 
 
