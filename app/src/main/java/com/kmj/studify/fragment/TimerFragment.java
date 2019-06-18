@@ -122,7 +122,6 @@ public class TimerFragment extends Fragment implements SensorEventListener {
             lightLux = (float) (Math.round(lightLux * 100)/100.0);
             int color = (int) lightLux;
             light=color;
-            Log.e("LIGHT",String.valueOf(color));
 
 
         }
@@ -132,6 +131,7 @@ public class TimerFragment extends Fragment implements SensorEventListener {
                 mHandler.sendEmptyMessage(0);
                 isStarted=true;
                 vibrator.vibrate(500);
+                Log.e("token",myToken);
                 NetworkHelper.getInstance().Start(myToken,"Math").enqueue(new Callback<StartModel>() {
                     @Override
                     public void onResponse(Call<StartModel> call, Response<StartModel> response) {
@@ -141,7 +141,7 @@ public class TimerFragment extends Fragment implements SensorEventListener {
 
                     @Override
                     public void onFailure(Call<StartModel> call, Throwable t) {
-                        Log.e("Ohmygoderror","error");
+                        Log.e("Ohmygoderror",t.toString());
                     }
                 });
             }

@@ -1,21 +1,12 @@
 package com.kmj.studify.data;
 
-import java.io.Serializable;
 
-public class RegisterModel implements Serializable {
-    private String message;
+public class RegisterModel {
     private UserModel userModel;
 
-    public String getMessage() {
-        return message;
-    }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
     public RegisterModel(String message, UserModel userModel) {
-        this.message = message;
         this.userModel = userModel;
     }
 

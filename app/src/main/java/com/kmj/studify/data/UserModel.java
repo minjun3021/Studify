@@ -6,10 +6,10 @@ public class UserModel {
     private String facebookId;
     private String profileURL;
     private String current;
-    private int start_time;
-    private int end_time;
+    private long start_time;
+    private long end_time;
     private int average_time;
-    private int max_time;
+    private double max_time;
     private String token;
     private int __v;
 
@@ -53,19 +53,19 @@ public class UserModel {
         this.current = current;
     }
 
-    public int getStart_time() {
+    public long getStart_time() {
         return start_time;
     }
 
-    public void setStart_time(int start_time) {
+    public void setStart_time(long start_time) {
         this.start_time = start_time;
     }
 
-    public int getEnd_time() {
+    public long getEnd_time() {
         return end_time;
     }
 
-    public void setEnd_time(int end_time) {
+    public void setEnd_time(long end_time) {
         this.end_time = end_time;
     }
 
@@ -77,11 +77,11 @@ public class UserModel {
         this.average_time = average_time;
     }
 
-    public int getMax_time() {
+    public double getMax_time() {
         return max_time;
     }
 
-    public void setMax_time(int max_time) {
+    public void setMax_time(double max_time) {
         this.max_time = max_time;
     }
 
@@ -101,7 +101,7 @@ public class UserModel {
         this.__v = __v;
     }
 
-    public UserModel(String _id, String name, String facebookId, String profileURL, String current, int start_time, int end_time, int average_time, int max_time, String token, int __v) {
+    public UserModel(String _id, String name, String facebookId, String profileURL, String current, long start_time, long end_time, int average_time, double max_time, String token, int __v) {
         this._id = _id;
         this.name = name;
         this.facebookId = facebookId;

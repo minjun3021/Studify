@@ -1,14 +1,14 @@
 package com.kmj.studify.data;
 
 public class StartModel {
-    private int amount;
+    private double amount;
     private String message;
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 

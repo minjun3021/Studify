@@ -6,6 +6,8 @@ import com.kmj.studify.data.RegisterModel;
 import com.kmj.studify.data.StartModel;
 import com.kmj.studify.data.UserModel;
 
+import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -23,6 +25,9 @@ public interface NetworkInterface {
     @POST("/user/end")
     @FormUrlEncoded
     Call<EndModel> End(@Field("token")String token);
+    @POST("/user/ranking")
+    Call<ArrayList<UserModel>> Ranking();
+
 
 
 
