@@ -8,6 +8,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +29,8 @@ public class TimerFragment extends Fragment implements SensorEventListener {
     Handler mHandler;
     boolean isStarted=false;
     boolean isnear=false;
+    int light=1000;
+    private Vibrator vibrator;
     int hours = 0, minutes = 0, seconds = 0;
 
     public static TimerFragment newInstance() {
@@ -47,10 +50,12 @@ public class TimerFragment extends Fragment implements SensorEventListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mainActivity = (MainActivity) getActivity();
+        vibrator = (Vibrator)mainActivity.getSystemService(Context.VIBRATOR_SERVICE);
 
         View v = inflater.inflate(R.layout.fragment_timer, container, false);
         sensorManager = (SensorManager)mainActivity.getSystemService(mainActivity.SENSOR_SERVICE);
         Sensor proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+        Sensor lightSensor=sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
         if(proximitySensor == null) {
             Toast.makeText(mainActivity, "No Proximity Sensor Found", Toast.LENGTH_SHORT).show();
         }
@@ -99,6 +104,32 @@ public class TimerFragment extends Fragment implements SensorEventListener {
                 Log.e("Far : ",String.valueOf(event.values[0]));
             }
         }
+        else if(event.sensor.getType()==Sensor.TYPE_LIGHT){
+            float lightLux = event.values[0];
+            lightLux = (float) (Math.round(lightLux * 100)/100.0);
+            int color = (int) lightLux;
+            light=color;
+            Log.e("LIGHT",String.valueOf(color));
+
+
+        }
+
+        if(isnear && light<2){
+            if(isStarted==false){
+                mHandler.sendEmptyMessage(0);
+                isStarted=true;
+                vibrator.vibrate(500);
+            }
+
+        }
+        else{
+            if(isStarted){
+                isStarted=false;
+                mHandler.removeCallbacksAndMessages(null);
+                vibrator.vibrate(500);
+            }
+
+        }
     }
 
     @Override
@@ -124,6 +155,9 @@ public class TimerFragment extends Fragment implements SensorEventListener {
         super.onResume();
         sensorManager.registerListener(this,
                 sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY),
+                SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this,
+                sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT),
                 SensorManager.SENSOR_DELAY_NORMAL);
     }
 
