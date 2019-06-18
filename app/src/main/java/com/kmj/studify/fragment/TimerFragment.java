@@ -1,6 +1,7 @@
 package com.kmj.studify.fragment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -18,8 +19,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kmj.studify.NetworkHelper;
 import com.kmj.studify.R;
 import com.kmj.studify.activity.MainActivity;
+import com.kmj.studify.data.EndModel;
+import com.kmj.studify.data.StartModel;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class TimerFragment extends Fragment implements SensorEventListener {
     MainActivity mainActivity;
@@ -31,6 +41,7 @@ public class TimerFragment extends Fragment implements SensorEventListener {
     boolean isnear=false;
     int light=1000;
     private Vibrator vibrator;
+    String myToken;
     int hours = 0, minutes = 0, seconds = 0;
 
     public static TimerFragment newInstance() {
@@ -52,6 +63,8 @@ public class TimerFragment extends Fragment implements SensorEventListener {
         mainActivity = (MainActivity) getActivity();
         vibrator = (Vibrator)mainActivity.getSystemService(Context.VIBRATOR_SERVICE);
 
+        SharedPreferences pref = mainActivity.getSharedPreferences("pref", MODE_PRIVATE);
+        myToken=pref.getString("MyUserToken", "");
         View v = inflater.inflate(R.layout.fragment_timer, container, false);
         sensorManager = (SensorManager)mainActivity.getSystemService(mainActivity.SENSOR_SERVICE);
         Sensor proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
@@ -119,6 +132,18 @@ public class TimerFragment extends Fragment implements SensorEventListener {
                 mHandler.sendEmptyMessage(0);
                 isStarted=true;
                 vibrator.vibrate(500);
+                NetworkHelper.getInstance().Start(myToken,"Math").enqueue(new Callback<StartModel>() {
+                    @Override
+                    public void onResponse(Call<StartModel> call, Response<StartModel> response) {
+                        Log.e("amount",String.valueOf(response.body().getAmount()));
+                        Log.e("current",response.body().getMessage());
+                    }
+
+                    @Override
+                    public void onFailure(Call<StartModel> call, Throwable t) {
+                        Log.e("Ohmygoderror","error");
+                    }
+                });
             }
 
         }
@@ -127,6 +152,17 @@ public class TimerFragment extends Fragment implements SensorEventListener {
                 isStarted=false;
                 mHandler.removeCallbacksAndMessages(null);
                 vibrator.vibrate(500);
+                NetworkHelper.getInstance().End(myToken).enqueue(new Callback<EndModel>() {
+                    @Override
+                    public void onResponse(Call<EndModel> call, Response<EndModel> response) {
+                        Log.e("amount",String.valueOf(response.body().getAmount()));
+                    }
+
+                    @Override
+                    public void onFailure(Call<EndModel> call, Throwable t) {
+
+                    }
+                });
             }
 
         }

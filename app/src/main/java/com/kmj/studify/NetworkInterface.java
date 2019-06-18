@@ -1,7 +1,9 @@
 package com.kmj.studify;
 
 
+import com.kmj.studify.data.EndModel;
 import com.kmj.studify.data.RegisterModel;
+import com.kmj.studify.data.StartModel;
 import com.kmj.studify.data.UserModel;
 
 import retrofit2.Call;
@@ -13,6 +15,15 @@ public interface NetworkInterface {
     @POST("/user/register")
     @FormUrlEncoded
     Call<RegisterModel> Register(@Field("name") String name, @Field("facebookId") String facebookId, @Field("profileURL") String profileURL);
+
+    @POST("/user/start")
+    @FormUrlEncoded
+    Call<StartModel> Start(@Field("token")String token,@Field("current")String current);
+
+    @POST("/user/end")
+    @FormUrlEncoded
+    Call<EndModel> End(@Field("token")String token);
+
 
 
 }

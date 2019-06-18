@@ -91,7 +91,14 @@ guest=findViewById(R.id.login_guestbtn);
         NetworkHelper.getInstance().Register(name,facebookId,profileURL).enqueue(new Callback<RegisterModel>() {
             @Override
             public void onResponse(Call<RegisterModel> call, Response<RegisterModel> response) {
+                SharedPreferences pref =getSharedPreferences("pref", MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("MyUserToken",response.body().getUserModel().getToken());
+                editor.commit();
                 Log.e("mymyToken",response.body().getUserModel().getToken());
+                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                startActivity(intent);
+                finish();
             }
 
             @Override
