@@ -4,18 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2d4b74"
+    android:background="#ebb42c"
     tools:context=".activity.SplashActivity">
 
     <ImageView
-        android:id="@+id/splash_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
-        android:src="@drawable/applogo"
+        android:src="@drawable/splash_circle"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="250dp"
+        android:id="@+id/splash_circle"
+        />
+    <ImageView
+        android:id="@+id/splash_iv"
+        android:layout_width="44dp"
+        android:layout_height="36.9dp"
+
+        android:src="@drawable/applogo"
+        app:layout_constraintTop_toTopOf="@id/splash_circle"
+        app:layout_constraintLeft_toLeftOf="@id/splash_circle"
+        app:layout_constraintRight_toRightOf="@id/splash_circle"
+        app:layout_constraintBottom_toBottomOf="@id/splash_circle"
+         />
 
     <TextView
         android:id="@+id/splash_tv1"
@@ -29,7 +41,7 @@
         android:textSize="30sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/splash_iv" />
+        app:layout_constraintTop_toBottomOf="@id/splash_circle" />
 
     <TextView
         android:layout_width="wrap_content"
