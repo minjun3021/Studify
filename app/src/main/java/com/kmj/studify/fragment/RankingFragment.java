@@ -2,6 +2,8 @@ package com.kmj.studify.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.Button;
 
 import com.kmj.studify.NetworkHelper;
 import com.kmj.studify.R;
+import com.kmj.studify.RankingAdapter;
 import com.kmj.studify.activity.MainActivity;
 import com.kmj.studify.data.UserModel;
 
@@ -23,6 +26,9 @@ import retrofit2.Response;
 public class RankingFragment extends Fragment {
     ArrayList<UserModel> ranking;
     MainActivity mainActivity;
+    private RecyclerView mRecyclerView;
+    private LinearLayoutManager mLinearLayoutManager;
+    private RankingAdapter rankingAdapter;
     Button btn;
     public RankingFragment newInstance() {
         RankingFragment fragment = new RankingFragment();
@@ -43,28 +49,28 @@ public class RankingFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_ranking, container, false);
         mainActivity= (MainActivity) getActivity();
 
-//        btn=v.findViewById(R.id.ranking_btn);
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                NetworkHelper.getInstance().Ranking().enqueue(new Callback<ArrayList<UserModel>>() {
-//                    @Override
-//                    public void onResponse(Call<ArrayList<UserModel>> call, Response<ArrayList<UserModel>> response) {
-//                        Log.e("rankingretrofit",response.toString());
-//                        ranking=response.body();
-//                        Log.e("How many",String.valueOf(ranking.size()));
-//                        Log.e("1st",ranking.get(0).getName());
-//                        Log.e("1st",ranking.get(0).getFacebookId());
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<ArrayList<UserModel>> call, Throwable t) {
-//                        Log.e("ohmygoderrror",t.toString());
-//                    }
-//                });
-//
-//            }
-//        });
+        mRecyclerView=v.findViewById(R.id.ranking_recycler);
+        mLinearLayoutManager=new LinearLayoutManager(mainActivity);
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+
+        ranking=new ArrayList<>();
+        NetworkHelper.getInstance().Ranking().enqueue(new Callback<ArrayList<UserModel>>() {
+            @Override
+            public void onResponse(Call<ArrayList<UserModel>> call, Response<ArrayList<UserModel>> response) {
+                Log.e("rankingretrofit",response.toString());
+                ranking=response.body();
+                Log.e("How many",String.valueOf(ranking.size()));
+                Log.e("1st",ranking.get(0).getName());
+                Log.e("1st",ranking.get(0).getFacebookId());
+                rankingAdapter=new RankingAdapter(ranking,mainActivity);
+                mRecyclerView.setAdapter(rankingAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<UserModel>> call, Throwable t) {
+                Log.e("ohmygoderrror",t.toString());
+            }
+        });
 
 
         return v;

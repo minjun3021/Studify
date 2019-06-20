@@ -22,6 +22,7 @@
         android:fontFamily="@font/nanumgothic_bold"
         android:lineSpacingExtra="2sp"
         android:text="김민준"
+        android:id="@+id/ranking_name"
         android:textColor="#000000"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@id/ranking_pic"
@@ -41,6 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:id="@+id/ranking_avg"
         android:layout_marginRight="20dp"
         android:fontFamily="@font/nanumgothic_regular"
         android:gravity="center_horizontal"
@@ -61,6 +63,7 @@
         android:text="04 : 38 : 09"
         android:textColor="#d9a31a"
         android:textSize="8sp"
+        android:id="@+id/ranking_max"
         android:fontFamily="@font/nanumgothic_regular"
         app:layout_constraintBottom_toBottomOf="@id/ranking_pic"
         app:layout_constraintRight_toRightOf="parent" />

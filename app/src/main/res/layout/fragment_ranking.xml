@@ -96,7 +96,7 @@ android:id="@+id/ranking_line"
             android:layout_width="0dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-
+            android:id="@+id/ranking_recycler"
             tools:listitem="@layout/ranking_item"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ranking_line"
