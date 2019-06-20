@@ -75,4 +75,13 @@
         android:textColor="#ffffff"
         android:textSize="16sp"
         tools:text="친구" />
+    
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        tools:listitem="@layout/friend_item"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/friends"
+        ></android.support.v7.widget.RecyclerView>
 </android.support.constraint.ConstraintLayout>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#fff"
+    android:layout_height="68dp">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:src="#000"
+        android:id="@+id/friend_pic"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginLeft="20dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:fontFamily="@font/nanumgothic_bold"
+        android:textColor="#000000"
+        android:lineSpacingExtra="2sp"
+        android:text="김민준"
+        app:layout_constraintTop_toTopOf="@id/friend_pic"
+        app:layout_constraintBottom_toBottomOf="@id/friend_pic"
+        app:layout_constraintLeft_toRightOf="@id/friend_pic"
+        android:layout_marginLeft="12dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="#000000"
+        android:layout_marginRight="8dp"
+        android:lineSpacingExtra="12sp"
+        app:layout_constraintTop_toTopOf="@id/friend_pic"
+        app:layout_constraintBottom_toBottomOf="@id/friend_pic"
+        app:layout_constraintRight_toLeftOf="@id/friendDoing"
+
+        android:text="국어 | 02:39"
+        />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/friendDoing"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginRight="16dp"
+        android:src="#009111"
+        app:layout_constraintTop_toTopOf="@id/friend_pic"
+        app:layout_constraintBottom_toBottomOf="@id/friend_pic"
+
+        app:layout_constraintRight_toRightOf="parent"
+
+         />
+</android.support.constraint.ConstraintLayout>
