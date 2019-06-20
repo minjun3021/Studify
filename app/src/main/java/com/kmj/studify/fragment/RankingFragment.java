@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.kmj.studify.NetworkHelper;
 import com.kmj.studify.R;
 import com.kmj.studify.RankingAdapter;
@@ -18,6 +20,7 @@ import com.kmj.studify.data.UserModel;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,7 +32,11 @@ public class RankingFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
     private RankingAdapter rankingAdapter;
-    Button btn;
+
+    CircleImageView circleImageView;
+    TextView avg;
+    TextView max;
+    TextView name;
     public RankingFragment newInstance() {
         RankingFragment fragment = new RankingFragment();
         return fragment;
@@ -48,7 +55,10 @@ public class RankingFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_ranking, container, false);
         mainActivity= (MainActivity) getActivity();
-
+        circleImageView=v.findViewById(R.id.rank_1st);
+        name=v.findViewById(R.id.rank_1st_name);
+        avg=v.findViewById(R.id.rank_1st_avg);
+        max=v.findViewById(R.id.rank_1st_best);
         mRecyclerView=v.findViewById(R.id.ranking_recycler);
         mLinearLayoutManager=new LinearLayoutManager(mainActivity);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -62,6 +72,25 @@ public class RankingFragment extends Fragment {
                 Log.e("How many",String.valueOf(ranking.size()));
                 Log.e("1st",ranking.get(0).getName());
                 Log.e("1st",ranking.get(0).getFacebookId());
+                Glide.with(mainActivity)
+                        .load(ranking.get(0).getProfileURL())
+                        .fitCenter()
+                        .into(circleImageView);
+                int hour, min, sec;
+                hour = (int) (ranking.get(0).getMax_time() / 3600);
+                min = (int) (ranking.get(0).getMax_time() % 3600 / 60);
+                sec = (int) (ranking.get(0).getMax_time() % 3600 % 60);
+                String maxs = String.valueOf(hour) + " : " + String.valueOf(min) + " : " + String.valueOf(sec);
+                max.setText("최대 공부 시간\n"+maxs);
+
+                hour = (int) (ranking.get(0).getAverage_time() / 3600);
+                min = (int) (ranking.get(0).getAverage_time() % 3600 / 60);
+                sec = (int) (ranking.get(0).getAverage_time() % 3600 % 60);
+                String avgs = String.valueOf(hour) + " : " + String.valueOf(min) + " : " + String.valueOf(sec);
+                name.setText(ranking.get(0).getName());
+                avg.setText("평균 공부 시간\n"+avgs);
+                ranking.remove(0);
+
                 rankingAdapter=new RankingAdapter(ranking,mainActivity);
                 mRecyclerView.setAdapter(rankingAdapter);
             }
