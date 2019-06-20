@@ -33,8 +33,6 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class TimerFragment extends Fragment implements SensorEventListener {
     MainActivity mainActivity;
-    TextView hour, minute, second;
-    Button start;
     private SensorManager sensorManager;
     Handler mHandler;
     boolean isStarted=false;
@@ -75,7 +73,6 @@ public class TimerFragment extends Fragment implements SensorEventListener {
         mHandler = new Handler() {
             public void handleMessage(Message msg) {
                 seconds++;
-                second.setText(String.valueOf(seconds));
 
                 // 메세지를 처리하고 또다시 핸들러에 메세지 전달 (1000ms 지연)
                 mHandler.sendEmptyMessageDelayed(0, 1000);
@@ -86,20 +83,7 @@ public class TimerFragment extends Fragment implements SensorEventListener {
 
 
         };
-        hour = v.findViewById(R.id.timer_hour);
-        minute = v.findViewById(R.id.timer_minute);
-        second = v.findViewById(R.id.timer_second);
-        start = v.findViewById(R.id.timer_start);
-        start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isStarted==false){
-                    mHandler.sendEmptyMessage(0);
-                    isStarted=true;
-                }
 
-            }
-        });
 
 
         return v;

@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_timer"
-        android:icon="@drawable/timer"
+        android:icon="@drawable/on_timer"
         android:title="타이머"
         />
     <item
         android:id="@+id/navigation_friends"
-        android:icon="@drawable/friends"
+        android:icon="@drawable/on_friends"
         android:title="친구"
 
         />
     <item
         android:id="@+id/navigation_ranking"
-        android:icon="@drawable/ranking"
+        android:icon="@drawable/on_ranking"
         android:title="랭킹"
         />
 </menu>

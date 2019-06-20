@@ -1,85 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#fff"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/stopwatch"
     android:layout_height="match_parent"
     tools:context=".fragment.TimerFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="60sp"
-        android:text="00"
-        android:textColor="#000"
+
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/select"
+        android:id="@+id/timer_select"
+        android:scaleType="fitXY"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/timer_hour"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/timer_p1"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="60sp"
-        android:text=":"
-        android:textColor="#000"
-        app:layout_constraintRight_toLeftOf="@id/timer_minute"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/timer_hour"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/timer_p1"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="60sp"
-        android:text="00"
-        android:textColor="#000"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/timer_minute"
-        app:layout_constraintLeft_toRightOf="@id/timer_p1"
-        app:layout_constraintRight_toLeftOf="@+id/timer_p2"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="60sp"
-        android:text=":"
-        android:textColor="#000"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/timer_minute"
-        app:layout_constraintLeft_toRightOf="@id/timer_second"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/timer_p2"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="60sp"
-        android:text="00"
-        android:textColor="#000"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/timer_second"
-        app:layout_constraintLeft_toRightOf="@id/timer_p2"
         app:layout_constraintRight_toRightOf="parent"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="타이머 시작"
-        android:textSize="30sp"
-        android:id="@+id/timer_start"
         android:layout_marginTop="40dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#b48408"
+        android:background="#fff"
+        android:lineSpacingExtra="8sp"
+        app:layout_constraintTop_toTopOf="@id/timer_select"
+        app:layout_constraintBottom_toBottomOf="@id/timer_select"
+        app:layout_constraintLeft_toLeftOf="@id/timer_select"
+        app:layout_constraintRight_toRightOf="@id/timer_select"
+        android:text="공부 선택"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:id="@+id/timer_tv1"
+        android:textColor="#c99613"
+        android:layout_marginTop="32dp"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/timer_select"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/timer_minute"
+        android:fontFamily="@font/nanumgothic_regular"
+        android:text="스마트폰을 뒤집어 공부를 시작해보세요!"
         />
 
 </android.support.constraint.ConstraintLayout>

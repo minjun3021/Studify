@@ -1,22 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#fff"
     android:layout_height="match_parent"
+    android:background="#fff"
     tools:context=".fragment.FriendsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Hello"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/myPic"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="22dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/friends_btn"
 
         />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:lineSpacingExtra="2sp"
+        android:text="김민준"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/myPic"
+        app:layout_constraintLeft_toRightOf="@id/myPic"
+        app:layout_constraintTop_toTopOf="@id/myPic"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:lineSpacingExtra="8sp"
+        android:text="수학 | 03:26"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        android:fontFamily="@font/nanumgothic_bold"
+        app:layout_constraintBottom_toBottomOf="@id/myPic"
+        app:layout_constraintRight_toLeftOf="@id/myDoing"
+        app:layout_constraintTop_toTopOf="@id/myPic" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/myDoing"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginRight="16dp"
+        android:src="#009111"
+        app:layout_constraintBottom_toBottomOf="@id/myPic"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/myPic" />
+
+    <ImageView
+        android:id="@+id/friends"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="22dp"
+        android:background="#ebb42c"
+        app:layout_constraintTop_toBottomOf="@id/myPic" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/friends"
+        app:layout_constraintBottom_toBottomOf="@id/friends"
+        app:layout_constraintLeft_toLeftOf="@id/friends"
+        android:layout_marginLeft="20dp"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="8sp"
+        android:textColor="#ffffff"
+        android:textSize="16sp"
+        tools:text="친구" />
 </android.support.constraint.ConstraintLayout>
