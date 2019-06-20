@@ -7,15 +7,99 @@
     android:background="#fff"
     tools:context=".fragment.RankingFragment">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Hello"
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:src="#000"
+        android:id="@+id/rank_1st"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/ranking_btn"
+        android:layout_marginTop="32dp"
 
         />
+    <ImageView
+        android:layout_width="16.1dp"
+        android:layout_height="12dp"
+        android:src="@drawable/crown"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="28dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:id="@+id/rank_1st_name"
+        android:fontFamily="@font/nanumgothic_bold"
+        android:textColor="#000000"
+        android:lineSpacingExtra="2sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rank_1st"
+        android:layout_marginTop="8dp"
+        android:text="김민준"
+        />
+    <View
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:id="@+id/center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:id="@+id/rank_1st_avg"
+        android:textColor="#000000"
+        app:layout_constraintTop_toBottomOf="@id/rank_1st_name"
+        android:lineSpacingExtra="2sp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintRight_toRightOf="@id/center"
+        android:gravity="center_horizontal"
+        android:layout_marginRight="6dp"
+        android:text="평균 공부 시간\n02 : 45 : 34"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="#d9a31a"
+        android:lineSpacingExtra="2sp"
+        android:layout_marginTop="8dp"
+        android:id="@+id/rank_1st_best"
+        android:layout_marginLeft="6dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintLeft_toLeftOf="@id/center"
+        app:layout_constraintTop_toBottomOf="@id/rank_1st_name"
+        android:text="최대 공부 시간\n04 : 53 : 16"
+
+
+        />
+    <View
+        android:layout_width="0dp"
+android:id="@+id/ranking_line"
+        android:layout_height="1dp"
+        android:background="#ebb42c"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/rank_1st_best"
+        />
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            tools:listitem="@layout/ranking_item"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ranking_line"
+            android:layout_height="0dp"></android.support.v7.widget.RecyclerView>
 
 </android.support.constraint.ConstraintLayout>
