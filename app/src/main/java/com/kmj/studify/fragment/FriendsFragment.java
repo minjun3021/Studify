@@ -173,6 +173,10 @@ public class FriendsFragment extends Fragment {
         }, 1500);
 
 
+
+
+
+
         return v;
     }
 

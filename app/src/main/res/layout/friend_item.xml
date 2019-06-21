@@ -48,7 +48,7 @@
         android:layout_width="10dp"
         android:layout_height="10dp"
         android:layout_marginRight="16dp"
-        android:src="#009111"
+        android:src="@drawable/online"
         app:layout_constraintTop_toTopOf="@id/friend_pic"
         app:layout_constraintBottom_toBottomOf="@id/friend_pic"
 

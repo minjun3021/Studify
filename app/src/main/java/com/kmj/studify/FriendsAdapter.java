@@ -61,15 +61,14 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendsV
                 .into(friendsViewHolder.circleImageView);
         if(mList.get(i).getStart_time()==-1 && mList.get(i).getEnd_time()==-1){
             friendsViewHolder.time.setText("");
-            friendsViewHolder.doing.setBackgroundColor(Color.rgb(191, 191, 191));
+            friendsViewHolder.doing.setImageResource(R.drawable.offline);
         }
         else if(mList.get(i).getStart_time()==-1){
-
-            friendsViewHolder.doing.setBackgroundColor(Color.rgb(191, 191, 191));
+            friendsViewHolder.doing.setImageResource(R.drawable.offline);
             friendsViewHolder.time.setText("");
         }
         else if(mList.get(i).getEnd_time()==-1){
-
+            friendsViewHolder.doing.setImageResource(R.drawable.online);
             long time;
             time=System.currentTimeMillis()-mList.get(i).getStart_time();
             Log.e("currentitme",String.valueOf(System.currentTimeMillis())+" "+String.valueOf(mList.get(i).getStart_time()));
@@ -79,7 +78,8 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendsV
             hour = (int) (time / 3600);
             min = (int) (time% 3600 / 60);
             sec = (int) (time% 3600 % 60);
-            String max = String.valueOf(hour) + " : " + String.valueOf(min) + " : " + String.valueOf(sec);
+            String max = mList.get(i).getCurrent()+" | "+String.valueOf(hour) + " : " + String.valueOf(min) + " : " + String.valueOf(sec);
+
             friendsViewHolder.time.setText(max);
 
         }
