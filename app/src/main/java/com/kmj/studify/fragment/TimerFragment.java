@@ -70,7 +70,19 @@ public class TimerFragment extends Fragment implements SensorEventListener {
         if(proximitySensor == null) {
             Toast.makeText(mainActivity, "No Proximity Sensor Found", Toast.LENGTH_SHORT).show();
         }
+        mHandler = new Handler() {
+            public void handleMessage(Message msg) {
+                seconds++;
 
+                // 메세지를 처리하고 또다시 핸들러에 메세지 전달 (1000ms 지연)
+                mHandler.sendEmptyMessageDelayed(0, 1000);
+
+
+            }
+
+
+
+        };
 
 
 

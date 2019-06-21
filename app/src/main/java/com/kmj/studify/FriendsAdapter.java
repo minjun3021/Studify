@@ -64,6 +64,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendsV
             friendsViewHolder.doing.setBackgroundColor(Color.rgb(191, 191, 191));
         }
         else if(mList.get(i).getStart_time()==-1){
+
             friendsViewHolder.doing.setBackgroundColor(Color.rgb(191, 191, 191));
             friendsViewHolder.time.setText("");
         }
