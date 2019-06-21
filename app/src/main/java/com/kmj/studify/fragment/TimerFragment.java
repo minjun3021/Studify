@@ -1,6 +1,8 @@
 package com.kmj.studify.fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -16,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +27,9 @@ import com.kmj.studify.R;
 import com.kmj.studify.activity.MainActivity;
 import com.kmj.studify.data.EndModel;
 import com.kmj.studify.data.StartModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,7 +43,9 @@ public class TimerFragment extends Fragment implements SensorEventListener {
     Handler mHandler;
     boolean isStarted=false;
     boolean isnear=false;
+    ImageView select;
     int light=1000;
+    TextView subject;
     private Vibrator vibrator;
     String myToken;
     int hours = 0, minutes = 0, seconds = 0;
@@ -64,6 +72,9 @@ public class TimerFragment extends Fragment implements SensorEventListener {
         SharedPreferences pref = mainActivity.getSharedPreferences("pref", MODE_PRIVATE);
         myToken=pref.getString("MyUserToken", "");
         View v = inflater.inflate(R.layout.fragment_timer, container, false);
+        subject=v.findViewById(R.id.subject);
+
+        select=v.findViewById(R.id.timer_select);
         sensorManager = (SensorManager)mainActivity.getSystemService(mainActivity.SENSOR_SERVICE);
         Sensor proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
         Sensor lightSensor=sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
@@ -83,7 +94,13 @@ public class TimerFragment extends Fragment implements SensorEventListener {
 
 
         };
-
+        select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                subject.setText("공부 선택");
+                show();
+            }
+        });
 
 
         return v;
@@ -116,7 +133,7 @@ public class TimerFragment extends Fragment implements SensorEventListener {
                 isStarted=true;
                 vibrator.vibrate(500);
                 Log.e("token",myToken);
-                NetworkHelper.getInstance().Start(myToken,"Math").enqueue(new Callback<StartModel>() {
+                NetworkHelper.getInstance().Start(myToken,subject.getText().toString()).enqueue(new Callback<StartModel>() {
                     @Override
                     public void onResponse(Call<StartModel> call, Response<StartModel> response) {
                         Log.e("amount",String.valueOf(response.body().getAmount()));
@@ -186,4 +203,47 @@ public class TimerFragment extends Fragment implements SensorEventListener {
         super.onPause();
         sensorManager.unregisterListener(this);
     }
+
+    void show()
+    {
+        final List<String> ListItems = new ArrayList<>();
+        ListItems.add("수학");
+        ListItems.add("국어");
+        ListItems.add("영어");
+        ListItems.add("과학");
+        ListItems.add("사회");
+        ListItems.add("한국사");
+        ListItems.add("일본어");
+        final CharSequence[] items =  ListItems.toArray(new String[ ListItems.size()]);
+
+        final List SelectedItems  = new ArrayList();
+        int defaultItem = 0;
+        SelectedItems.add(defaultItem);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity);
+        builder.setTitle("공부 선택");
+        builder.setSingleChoiceItems(items, defaultItem,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SelectedItems.clear();
+                        SelectedItems.add(which);
+                    }
+                });
+        builder.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        String msg="";
+
+                        if (!SelectedItems.isEmpty()) {
+                            int index = (int) SelectedItems.get(0);
+                            msg = ListItems.get(index);
+                        }
+                        subject.setText(msg);
+                    }
+                });
+        builder.setCancelable(false);
+        builder.show();
+    }
+
 }
