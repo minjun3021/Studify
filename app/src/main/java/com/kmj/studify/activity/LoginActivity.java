@@ -1,6 +1,7 @@
 package com.kmj.studify.activity;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     private LoginCallback mLoginCallback;
     private CallbackManager mCallbackManager;
     Button guest;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,23 +86,30 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
-        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("pref", MODE_PRIVATE);
+        Log.e("pref check::",pref.getString("name","no data??"));
         String name = pref.getString("name", "");
         String facebookId = pref.getString("facebookId", "");
         String profileURL = pref.getString("profileURL", "");
+        Log.e("pref check:: name::::",name);
+        finish();
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public static void register(final Context context, String name, String facebookId,String profileURL) {
         NetworkHelper.getInstance().Register(name, facebookId, profileURL).enqueue(new Callback<RegisterModel>() {
             @Override
             public void onResponse(Call<RegisterModel> call, Response<RegisterModel> response) {
-                SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+                SharedPreferences pref = context.getSharedPreferences("pref", MODE_PRIVATE);
                 Log.e("registerresponse", response.toString());
                 SharedPreferences.Editor editor = pref.edit();
                 String mytoken=response.body().getUserModel().getToken();
                 editor.putString("MyUserToken",mytoken);
                 editor.commit();
-                Log.e("mymyToken", mytoken);
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+
+                Intent intent = new Intent(context, MainActivity.class);
+                context.startActivity(intent);
+
             }
 
             @Override
@@ -109,9 +118,5 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
-        super.onActivityResult(requestCode, resultCode, data);
     }
-
 }
-

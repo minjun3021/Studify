@@ -14,6 +14,7 @@ import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.LoggingBehavior;
 import com.facebook.login.LoginResult;
+import com.kmj.studify.activity.LoginActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -97,7 +98,8 @@ public class LoginCallback implements FacebookCallback<LoginResult> {
                             editor.putString("profileURL","http://graph.facebook.com/"+facebookId+"/picture?type=large");
                             editor.commit();
 
-
+                            LoginActivity.register(context,name,facebookId,"http://graph.facebook.com/"+facebookId+"/picture?type=large");
+                            Log.e("::prefcheck::", pref.getString("name","none data"));
 
                         } catch (JSONException e) {
 
@@ -111,4 +113,3 @@ public class LoginCallback implements FacebookCallback<LoginResult> {
         request.executeAsync();
     }
 }
-
