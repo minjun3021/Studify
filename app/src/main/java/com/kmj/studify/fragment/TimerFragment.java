@@ -39,8 +39,10 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class TimerFragment extends Fragment implements SensorEventListener {
     MainActivity mainActivity;
-    private SensorManager sensorManager;
+    SensorManager sensorManager;
+    Sensor proximitySensor;
     Handler mHandler;
+    Sensor lightSensor;
     boolean isStarted=false;
     boolean isnear=false;
     ImageView select;
@@ -76,8 +78,8 @@ public class TimerFragment extends Fragment implements SensorEventListener {
 
         select=v.findViewById(R.id.timer_select);
         sensorManager = (SensorManager)mainActivity.getSystemService(mainActivity.SENSOR_SERVICE);
-        Sensor proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
-        Sensor lightSensor=sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+        proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+        lightSensor=sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
         if(proximitySensor == null) {
             Toast.makeText(mainActivity, "No Proximity Sensor Found", Toast.LENGTH_SHORT).show();
         }
@@ -242,4 +244,19 @@ public class TimerFragment extends Fragment implements SensorEventListener {
         builder.show();
     }
 
+    public  void On(){
+        sensorManager.registerListener(this,
+                sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY),
+                SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this,
+                sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT),
+                SensorManager.SENSOR_DELAY_NORMAL);
+
+
+    }
+
+    public void Off(){
+
+        sensorManager.unregisterListener(this);
+    }
 }

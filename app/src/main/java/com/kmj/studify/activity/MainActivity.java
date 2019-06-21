@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 ti.setImageResource(R.drawable.on_timer);
                 fi.setImageResource(R.drawable.friends);
                 ri.setImageResource(R.drawable.ranking);
+                timerFragment.On();
                 mActionBarToolbar.setTitle("공부시간 측정");
                 fragmentUtils.setCurrentFragmentByPosition(getSupportFragmentManager(), 0, new Bundle());
             }
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 ti.setImageResource(R.drawable.timer);
                 fi.setImageResource(R.drawable.on_friends);
                 ri.setImageResource(R.drawable.ranking);
+                timerFragment.Off();
                 mActionBarToolbar.setTitle("친구들의 공부상황");
                 fragmentUtils.setCurrentFragmentByPosition(getSupportFragmentManager(), 1, new Bundle());
             }
@@ -96,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 fi.setImageResource(R.drawable.friends);
                 ri.setImageResource(R.drawable.on_ranking);
                 mActionBarToolbar.setTitle("전체 랭킹");
+                timerFragment.Off();
                 fragmentUtils.setCurrentFragmentByPosition(getSupportFragmentManager(), 2, new Bundle());
             }
         });
