@@ -11,6 +11,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private TimerFragment timerFragment;
     private RankingFragment rankingFragment;
+    static Toolbar mActionBarToolbar;
     private FriendsFragment friendsFragment;
     ConstraintLayout timer,friends,ranking;
     ArrayList<Fragment> fragments;
@@ -37,7 +39,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        mActionBarToolbar=findViewById(R.id.app_toolbar);
+        mActionBarToolbar.setTitle("공부시간 측정");
+        setSupportActionBar(mActionBarToolbar);
+        mActionBarToolbar.setTitle("공부시간 측정");
         timer=findViewById(R.id.timer);
         friends=findViewById(R.id.friends);
         ranking=findViewById(R.id.ranking);
@@ -62,13 +67,14 @@ public class MainActivity extends AppCompatActivity {
         fragmentUtils = new FragmentUtils(R.id.frame_layout, fragments);
         fragmentUtils.setCurrentFragmentByPosition(getSupportFragmentManager(), 0, new Bundle());
         ti.setImageResource(R.drawable.on_timer);
-
+        mActionBarToolbar.setTitle("공부시간 측정");
         timer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ti.setImageResource(R.drawable.on_timer);
                 fi.setImageResource(R.drawable.friends);
                 ri.setImageResource(R.drawable.ranking);
+                mActionBarToolbar.setTitle("공부시간 측정");
                 fragmentUtils.setCurrentFragmentByPosition(getSupportFragmentManager(), 0, new Bundle());
             }
         });
@@ -79,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 ti.setImageResource(R.drawable.timer);
                 fi.setImageResource(R.drawable.on_friends);
                 ri.setImageResource(R.drawable.ranking);
+                mActionBarToolbar.setTitle("친구들의 공부상황");
                 fragmentUtils.setCurrentFragmentByPosition(getSupportFragmentManager(), 1, new Bundle());
             }
         });
@@ -88,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 ti.setImageResource(R.drawable.timer);
                 fi.setImageResource(R.drawable.friends);
                 ri.setImageResource(R.drawable.on_ranking);
+                mActionBarToolbar.setTitle("전체 랭킹");
                 fragmentUtils.setCurrentFragmentByPosition(getSupportFragmentManager(), 2, new Bundle());
             }
         });

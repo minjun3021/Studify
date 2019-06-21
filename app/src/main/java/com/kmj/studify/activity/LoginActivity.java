@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -38,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        LoginManager.getInstance().logOut();
         guest = findViewById(R.id.login_guestbtn);
         btn_facebook_login = findViewById(R.id.login_button);
         custom_login_btn = findViewById(R.id.custom_login_button);
@@ -57,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         guest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginManager.getInstance().logOut();
+                Toast.makeText(LoginActivity.this, "아직 구현 중인 기능입니다.", Toast.LENGTH_SHORT).show();
 
             }
         });

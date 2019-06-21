@@ -53,6 +53,7 @@
         android:background="#ebb42c"
         app:layout_constraintTop_toBottomOf="@id/myPic" />
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -64,7 +65,7 @@
         android:lineSpacingExtra="8sp"
         android:textColor="#ffffff"
         android:textSize="16sp"
-        tools:text="친구" />
+        android:text="앱을 사용중인 친구" />
     
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"

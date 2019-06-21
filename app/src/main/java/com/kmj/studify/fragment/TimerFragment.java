@@ -173,16 +173,12 @@ public class TimerFragment extends Fragment implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         switch (accuracy) {
             case SensorManager.SENSOR_STATUS_UNRELIABLE:
-                Toast.makeText(mainActivity, "UNRELIABLE", Toast.LENGTH_SHORT).show();
                 break;
             case SensorManager.SENSOR_STATUS_ACCURACY_LOW:
-                Toast.makeText(mainActivity, "LOW", Toast.LENGTH_SHORT).show();
                 break;
             case SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM:
-                Toast.makeText(mainActivity, "MEDIUM", Toast.LENGTH_SHORT).show();
                 break;
             case SensorManager.SENSOR_STATUS_ACCURACY_HIGH:
-                Toast.makeText(mainActivity, "HIGH", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
