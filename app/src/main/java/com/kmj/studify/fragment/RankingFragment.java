@@ -19,6 +19,8 @@ import com.kmj.studify.activity.MainActivity;
 import com.kmj.studify.data.UserModel;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -57,7 +59,6 @@ public class RankingFragment extends Fragment {
         mainActivity= (MainActivity) getActivity();
         circleImageView=v.findViewById(R.id.rank_1st);
         name=v.findViewById(R.id.rank_1st_name);
-        avg=v.findViewById(R.id.rank_1st_avg);
         max=v.findViewById(R.id.rank_1st_best);
         mRecyclerView=v.findViewById(R.id.ranking_recycler);
         mLinearLayoutManager=new LinearLayoutManager(mainActivity);
@@ -88,7 +89,6 @@ public class RankingFragment extends Fragment {
                 sec = (int) (ranking.get(0).getAverage_time() % 3600 % 60);
                 String avgs = String.valueOf(hour) + " : " + String.valueOf(min) + " : " + String.valueOf(sec);
                 name.setText(ranking.get(0).getName());
-                avg.setText("평균 공부 시간\n"+avgs);
                 ranking.remove(0);
 
                 rankingAdapter=new RankingAdapter(ranking,mainActivity);
@@ -100,6 +100,7 @@ public class RankingFragment extends Fragment {
                 Log.e("ohmygoderrror",t.toString());
             }
         });
+
 
 
         return v;

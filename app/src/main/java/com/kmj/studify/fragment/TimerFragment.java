@@ -17,6 +17,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -140,6 +142,12 @@ public class TimerFragment extends Fragment implements SensorEventListener {
                     public void onResponse(Call<StartModel> call, Response<StartModel> response) {
                         Log.e("amount",String.valueOf(response.body().getAmount()));
                         Log.e("current",response.body().getMessage());
+                        Window mywindow = mainActivity.getWindow();
+                        WindowManager.LayoutParams lp = mywindow.getAttributes();
+                        lp.screenBrightness = 0;
+                        mywindow.setAttributes(lp);
+
+
                     }
 
                     @Override
@@ -159,6 +167,10 @@ public class TimerFragment extends Fragment implements SensorEventListener {
                     @Override
                     public void onResponse(Call<EndModel> call, Response<EndModel> response) {
                         Log.e("amount",String.valueOf(response.body().getAmount()));
+                        Window mywindow = mainActivity.getWindow();
+                        WindowManager.LayoutParams lp = mywindow.getAttributes();
+                        lp.screenBrightness = 1;
+                        mywindow.setAttributes(lp);
                     }
 
                     @Override
