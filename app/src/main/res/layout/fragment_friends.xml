@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="#f7f7f7"
     tools:context=".fragment.FriendsFragment">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -25,6 +25,7 @@
         android:lineSpacingExtra="2sp"
         android:text="김민준"
         android:textColor="#000000"
+        android:id="@+id/myName"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@id/myPic"
         app:layout_constraintLeft_toRightOf="@id/myPic"
@@ -32,18 +33,7 @@
 
         />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="8dp"
-        android:lineSpacingExtra="8sp"
-        android:text="수학 | 03:26"
-        android:textColor="#000000"
-        android:textSize="12sp"
-        android:fontFamily="@font/nanumgothic_bold"
-        app:layout_constraintBottom_toBottomOf="@id/myPic"
-        app:layout_constraintRight_toLeftOf="@id/myDoing"
-        app:layout_constraintTop_toTopOf="@id/myPic" />
+
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/myDoing"
@@ -80,7 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         tools:listitem="@layout/friend_item"
-
+        android:id="@+id/friends_recycler"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/friends"
         ></android.support.v7.widget.RecyclerView>
