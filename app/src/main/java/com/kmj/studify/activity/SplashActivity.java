@@ -19,6 +19,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
         AccessToken accessToken = AccessToken.getCurrentAccessToken(); //앱에 저장 된토큰 가져오기
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 

@@ -209,7 +209,7 @@ public class FriendsFragment extends Fragment {
         Timer timer = new Timer();
 
 
-        timer.schedule(adTast, 0, 3000);
+        timer.schedule(adTast, 0, 1000);
 
 
 

@@ -34,6 +34,7 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.RankingV
         public RankingViewHolder(@NonNull View v) {
             super(v);
             this.circleImageView = (CircleImageView) v.findViewById(R.id.ranking_pic);
+            this.avg=(TextView)v.findViewById(R.id.ranking_avg);
             this.fname = (TextView) v.findViewById(R.id.ranking_name);
             this.max = (TextView) v.findViewById(R.id.ranking_max);
 
@@ -64,6 +65,13 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.RankingV
         sec = (int) (mList.get(i).getMax_time() % 3600 % 60);
         String max = String.valueOf(hour) + " : " + String.valueOf(min) + " : " + String.valueOf(sec);
         rankingViewHolder.max.setText(max);
+
+        hour = (int) (mList.get(i).getAverage_time() / 3600);
+        min = (int) (mList.get(i).getAverage_time() % 3600 / 60);
+        sec = (int) (mList.get(i).getAverage_time() % 3600 % 60);
+        String avg = String.valueOf(hour) + " : " + String.valueOf(min) + " : " + String.valueOf(sec);
+
+        rankingViewHolder.avg.setText(avg);
 
     }
 

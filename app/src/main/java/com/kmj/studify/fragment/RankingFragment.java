@@ -59,6 +59,7 @@ public class RankingFragment extends Fragment {
         mainActivity= (MainActivity) getActivity();
         circleImageView=v.findViewById(R.id.rank_1st);
         name=v.findViewById(R.id.rank_1st_name);
+        avg=v.findViewById(R.id.rank_1st_avg);
         max=v.findViewById(R.id.rank_1st_best);
         mRecyclerView=v.findViewById(R.id.ranking_recycler);
         mLinearLayoutManager=new LinearLayoutManager(mainActivity);
@@ -88,6 +89,7 @@ public class RankingFragment extends Fragment {
                 min = (int) (ranking.get(0).getAverage_time() % 3600 / 60);
                 sec = (int) (ranking.get(0).getAverage_time() % 3600 % 60);
                 String avgs = String.valueOf(hour) + " : " + String.valueOf(min) + " : " + String.valueOf(sec);
+                avg.setText("평균 공부 시간\n"+avgs);
                 name.setText(ranking.get(0).getName());
                 ranking.remove(0);
 
