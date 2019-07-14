@@ -42,6 +42,8 @@ import static android.content.Context.MODE_PRIVATE;
 public class TimerFragment extends Fragment implements SensorEventListener {
     MainActivity mainActivity;
     SensorManager sensorManager;
+
+
     Sensor proximitySensor;
     Handler mHandler;
     Sensor lightSensor;
@@ -137,7 +139,11 @@ public class TimerFragment extends Fragment implements SensorEventListener {
                 isStarted=true;
                 vibrator.vibrate(500);
                 Log.e("token",myToken);
-                NetworkHelper.getInstance().Start(myToken,subject.getText().toString()).enqueue(new Callback<StartModel>() {
+                String Subject=subject.getText().toString();
+                if(Subject.equals("공부 선택")){
+                    Subject="공부";
+                }
+                NetworkHelper.getInstance().Start(myToken,Subject).enqueue(new Callback<StartModel>() {
                     @Override
                     public void onResponse(Call<StartModel> call, Response<StartModel> response) {
                         Log.e("amount",String.valueOf(response.body().getAmount()));

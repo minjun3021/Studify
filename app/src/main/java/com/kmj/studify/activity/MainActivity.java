@@ -12,15 +12,24 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.kmj.studify.FragmentUtils;
 import com.kmj.studify.R;
 import com.kmj.studify.fragment.FriendsFragment;
 import com.kmj.studify.fragment.RankingFragment;
 import com.kmj.studify.fragment.TimerFragment;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -30,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
     private RankingFragment rankingFragment;
     static Toolbar mActionBarToolbar;
     private FriendsFragment friendsFragment;
+    public static String friendsFacebookIds;
     ConstraintLayout timer,friends,ranking;
     ArrayList<Fragment> fragments;
     FragmentUtils fragmentUtils;
     ImageView ti,fi,ri;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,4 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+
 }

@@ -3,7 +3,6 @@ package com.kmj.studify.fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.facebook.AccessToken;
@@ -21,6 +21,7 @@ import com.facebook.HttpMethod;
 import com.kmj.studify.FriendsAdapter;
 import com.kmj.studify.NetworkHelper;
 import com.kmj.studify.R;
+import com.kmj.studify.RecyclerTouchListener;
 import com.kmj.studify.activity.MainActivity;
 import com.kmj.studify.data.UserModel;
 
@@ -150,46 +151,37 @@ public class FriendsFragment extends Fragment {
         request.setParameters(parameters);
         request.executeAsync();
         friendsranking = new ArrayList<>();
-        new Handler().postDelayed(new Runnable() {
+        Log.e("friends",friendsFacebookIds);
+        NetworkHelper.getInstance().FriendsRanking(friendsFacebookIds).enqueue(new Callback<ArrayList<UserModel>>() {
             @Override
-            public void run() {
-                NetworkHelper.getInstance().FriendsRanking(friendsFacebookIds).enqueue(new Callback<ArrayList<UserModel>>() {
-                    @Override
-                    public void onResponse(Call<ArrayList<UserModel>> call, Response<ArrayList<UserModel>> response) {
-                        Log.e("rankingretrofit", response.toString());
-                        friendsranking = response.body();
-                          Log.e("How many", String.valueOf(friendsranking.size()));
-                        if (friendsranking.size() != 0) {
-                            Log.e("1st", friendsranking.get(0).getName());
-                            Log.e("1st", friendsranking.get(0).getFacebookId());
-                        }
+            public void onResponse(Call<ArrayList<UserModel>> call, Response<ArrayList<UserModel>> response) {
+                Log.e("rankingretrofit", response.toString());
+                friendsranking = response.body();
+                Log.e("How many", String.valueOf(friendsranking.size()));
 
-                        friendsAdapter = new FriendsAdapter(friendsranking, mainActivity);
-                        mRecyclerView.setAdapter(friendsAdapter);
+                friendsAdapter = new FriendsAdapter(friendsranking, mainActivity);
+                mRecyclerView.setAdapter(friendsAdapter);
 
-                    }
-
-                    @Override
-                    public void onFailure(Call<ArrayList<UserModel>> call, Throwable t) {
-                        Log.e("ohmygoderror", toString());
-                    }
-                });
             }
-        }, 1500);
+
+            @Override
+            public void onFailure(Call<ArrayList<UserModel>> call, Throwable t) {
+                Log.e("ohmygoderror", toString());
+            }
+        });
+
+
         TimerTask adTast = new TimerTask() {
 
             public void run() {
-                Log.e("timer","good");
+                Log.e("timer", "good");
                 NetworkHelper.getInstance().FriendsRanking(friendsFacebookIds).enqueue(new Callback<ArrayList<UserModel>>() {
                     @Override
                     public void onResponse(Call<ArrayList<UserModel>> call, Response<ArrayList<UserModel>> response) {
                         Log.e("rankingretrofit", response.toString());
                         friendsranking = response.body();
                         Log.e("How many", String.valueOf(friendsranking.size()));
-                        if (friendsranking.size() != 0) {
-                            Log.e("1st", friendsranking.get(0).getName());
-                            Log.e("1st", friendsranking.get(0).getFacebookId());
-                        }
+
 
                         friendsAdapter = new FriendsAdapter(friendsranking, mainActivity);
                         mRecyclerView.setAdapter(friendsAdapter);
@@ -211,14 +203,19 @@ public class FriendsFragment extends Fragment {
 
         timer.schedule(adTast, 0, 1000);
 
+        mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(mainActivity, mRecyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Toast.makeText(mainActivity,friendsranking.get(position).getToken(), Toast.LENGTH_SHORT).show();
+            }
 
+            @Override
+            public void onLongClick(View view, int position) {
 
-
-
-
+            }
+        }));
         return v;
     }
-
 
 
 }
