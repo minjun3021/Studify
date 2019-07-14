@@ -2,6 +2,7 @@ package com.kmj.studify;
 
 
 import com.kmj.studify.data.EndModel;
+import com.kmj.studify.data.RecordModel;
 import com.kmj.studify.data.RegisterModel;
 import com.kmj.studify.data.StartModel;
 import com.kmj.studify.data.UserModel;
@@ -32,6 +33,10 @@ public interface NetworkInterface {
     @POST("/user/friend/ranking")
     @FormUrlEncoded
     Call<ArrayList<UserModel>> FriendsRanking(@Field("ids")String ids);
+
+    @POST("/user/record")
+    @FormUrlEncoded
+    Call<ArrayList<RecordModel>> Record(@Field("token")String token);
 
 
 

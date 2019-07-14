@@ -23,6 +23,7 @@ import com.kmj.studify.NetworkHelper;
 import com.kmj.studify.R;
 import com.kmj.studify.RecyclerTouchListener;
 import com.kmj.studify.activity.MainActivity;
+import com.kmj.studify.data.RecordModel;
 import com.kmj.studify.data.UserModel;
 
 import org.json.JSONArray;
@@ -206,7 +207,17 @@ public class FriendsFragment extends Fragment {
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(mainActivity, mRecyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Toast.makeText(mainActivity,friendsranking.get(position).getToken(), Toast.LENGTH_SHORT).show();
+                NetworkHelper.getInstance().Record(friendsranking.get(position).getToken()).enqueue(new Callback<ArrayList<RecordModel>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<RecordModel>> call, Response<ArrayList<RecordModel>> response) {
+                        Toast.makeText(mainActivity, String.valueOf(response.body().get(0).getAmount()), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<RecordModel>> call, Throwable t) {
+
+                    }
+                });
             }
 
             @Override
