@@ -2,7 +2,7 @@ package com.kmj.studify.data;
 
 public class RecordModel {
     private String _id;
-    private String data;
+    private String date;
     private double amount;
     private String userToken;
     private String token;
@@ -16,12 +16,12 @@ public class RecordModel {
         this._id = _id;
     }
 
-    public String getData() {
-        return data;
+    public String getDate() {
+        return date;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public double getAmount() {
@@ -56,9 +56,9 @@ public class RecordModel {
         this.__v = __v;
     }
 
-    public RecordModel(String _id, String data, double amount, String userToken, String token, String __v) {
+    public RecordModel(String _id, String date, double amount, String userToken, String token, String __v) {
         this._id = _id;
-        this.data = data;
+        this.date = date;
         this.amount = amount;
         this.userToken = userToken;
         this.token = token;

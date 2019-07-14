@@ -1,5 +1,6 @@
 package com.kmj.studify.fragment;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,9 +21,11 @@ import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.kmj.studify.FriendsAdapter;
 import com.kmj.studify.NetworkHelper;
+import com.kmj.studify.PopActivity;
 import com.kmj.studify.R;
 import com.kmj.studify.RecyclerTouchListener;
 import com.kmj.studify.activity.MainActivity;
+import com.kmj.studify.data.Graph;
 import com.kmj.studify.data.RecordModel;
 import com.kmj.studify.data.UserModel;
 
@@ -30,7 +33,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -48,13 +54,13 @@ public class FriendsFragment extends Fragment {
     String friendsFacebookIds = "";
     CircleImageView mypic;
     Handler mHandler;
-
+    ArrayList<RecordModel> record;
     TextView tvname;
     Handler handler;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
     private FriendsAdapter friendsAdapter;
-
+    ArrayList<Graph> toGraph;
 
     public FriendsFragment newInstance() {
         FriendsFragment fragment = new FriendsFragment();
@@ -152,6 +158,7 @@ public class FriendsFragment extends Fragment {
         request.setParameters(parameters);
         request.executeAsync();
         friendsranking = new ArrayList<>();
+
         Log.e("friends",friendsFacebookIds);
         NetworkHelper.getInstance().FriendsRanking(friendsFacebookIds).enqueue(new Callback<ArrayList<UserModel>>() {
             @Override
@@ -203,14 +210,46 @@ public class FriendsFragment extends Fragment {
 
 
         timer.schedule(adTast, 0, 1000);
+        long nowmill = System.currentTimeMillis();
 
+        final Date now=new Date(nowmill);
+        final SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
+
+        record=new ArrayList<>();
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(mainActivity, mRecyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
-            public void onClick(View view, int position) {
+            public void onClick(View view, final int position) {
                 NetworkHelper.getInstance().Record(friendsranking.get(position).getToken()).enqueue(new Callback<ArrayList<RecordModel>>() {
                     @Override
                     public void onResponse(Call<ArrayList<RecordModel>> call, Response<ArrayList<RecordModel>> response) {
-                        Toast.makeText(mainActivity, String.valueOf(response.body().get(0).getAmount()), Toast.LENGTH_SHORT).show();
+                        record=response.body();
+                        toGraph=new ArrayList<>();
+                        Log.e("amount",String.valueOf(record.get(0).getAmount()));
+                        for(int i=0; i<record.size(); i++){
+                            Date secondDate = null;
+                            try {
+
+                                secondDate = format.parse(record.get(i).getDate());
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            long calDate=now.getTime()-secondDate.getTime();
+                            long calDateDays=calDate/(24*60*60*1000);
+                            String time1=format.format(now);
+                            String time2=format.format(secondDate);
+                            Log.e("time1",time1);
+                            Log.e("time2",time2);
+                            Log.e("날짜차이","Record["+i+"] 의 날짜차이 : "+String.valueOf(calDateDays));
+                            if(calDateDays>5){
+                                break;
+                            }
+                            else{ //5일 이내일때
+                                toGraph.add(0,new Graph(record.get(i).getAmount(),record.get(i).getDate(),friendsranking.get(position).getName()));
+                            }
+                        }
+                        Intent intent = new Intent(mainActivity, PopActivity.class);
+                        intent.putExtra("data", toGraph);
+                        startActivity(intent);
                     }
 
                     @Override

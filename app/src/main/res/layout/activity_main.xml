@@ -13,7 +13,7 @@
         app:titleTextColor="#000"
         android:layout_height="?attr/actionBarSize"
         android:background="#fff"
-
+        android:theme="@style/ToolbarTheme"
         android:elevation="6dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
