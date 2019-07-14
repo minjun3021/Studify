@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.facebook.AccessToken;
@@ -53,7 +53,10 @@ public class FriendsFragment extends Fragment {
     MainActivity mainActivity;
     String friendsFacebookIds = "";
     CircleImageView mypic;
+    String myToken;
+    ConstraintLayout me;
     Handler mHandler;
+    String name;
     ArrayList<RecordModel> record;
     TextView tvname;
     Handler handler;
@@ -81,14 +84,16 @@ public class FriendsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_friends, container, false);
         mainActivity = (MainActivity) getActivity();
         mRecyclerView = v.findViewById(R.id.friends_recycler);
+        me = v.findViewById(R.id.myPro);
         mLinearLayoutManager = new LinearLayoutManager(mainActivity);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
         mypic = v.findViewById(R.id.myPic);
         SharedPreferences pref = mainActivity.getSharedPreferences("pref", MODE_PRIVATE);
-        String name = pref.getString("name", "");
+        name = pref.getString("name", "");
         String facebookId = pref.getString("facebookId", "");
         String profileURL = pref.getString("profileURL", "");
+        myToken=pref.getString("MyUserToken","");
         tvname = v.findViewById(R.id.myName);
         tvname.setText(name);
         Glide.with(mainActivity)
@@ -159,7 +164,7 @@ public class FriendsFragment extends Fragment {
         request.executeAsync();
         friendsranking = new ArrayList<>();
 
-        Log.e("friends",friendsFacebookIds);
+        Log.e("friends", friendsFacebookIds);
         NetworkHelper.getInstance().FriendsRanking(friendsFacebookIds).enqueue(new Callback<ArrayList<UserModel>>() {
             @Override
             public void onResponse(Call<ArrayList<UserModel>> call, Response<ArrayList<UserModel>> response) {
@@ -212,20 +217,21 @@ public class FriendsFragment extends Fragment {
         timer.schedule(adTast, 0, 1000);
         long nowmill = System.currentTimeMillis();
 
-        final Date now=new Date(nowmill);
-        final SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
+        final Date now = new Date(nowmill);
+        final SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
 
-        record=new ArrayList<>();
-        mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(mainActivity, mRecyclerView, new RecyclerTouchListener.ClickListener() {
+        record = new ArrayList<>();
+
+        me.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view, final int position) {
-                NetworkHelper.getInstance().Record(friendsranking.get(position).getToken()).enqueue(new Callback<ArrayList<RecordModel>>() {
+            public void onClick(View v) {
+                NetworkHelper.getInstance().Record(myToken).enqueue(new Callback<ArrayList<RecordModel>>() {
                     @Override
                     public void onResponse(Call<ArrayList<RecordModel>> call, Response<ArrayList<RecordModel>> response) {
-                        record=response.body();
-                        toGraph=new ArrayList<>();
-                        Log.e("amount",String.valueOf(record.get(0).getAmount()));
-                        for(int i=0; i<record.size(); i++){
+                        record = response.body();
+                        toGraph = new ArrayList<>();
+                        Log.e("amount", String.valueOf(record.get(0).getAmount()));
+                        for (int i = 0; i < record.size(); i++) {
                             Date secondDate = null;
                             try {
 
@@ -233,18 +239,60 @@ public class FriendsFragment extends Fragment {
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-                            long calDate=now.getTime()-secondDate.getTime();
-                            long calDateDays=calDate/(24*60*60*1000);
-                            String time1=format.format(now);
-                            String time2=format.format(secondDate);
-                            Log.e("time1",time1);
-                            Log.e("time2",time2);
-                            Log.e("날짜차이","Record["+i+"] 의 날짜차이 : "+String.valueOf(calDateDays));
-                            if(calDateDays>5){
+                            long calDate = now.getTime() - secondDate.getTime();
+                            long calDateDays = calDate / (24 * 60 * 60 * 1000);
+                            String time1 = format.format(now);
+                            String time2 = format.format(secondDate);
+                            Log.e("time1", time1);
+                            Log.e("time2", time2);
+                            Log.e("날짜차이", "Record[" + i + "] 의 날짜차이 : " + String.valueOf(calDateDays));
+                            if (calDateDays > 5) {
                                 break;
+                            } else { //5일 이내일때
+                                toGraph.add(0, new Graph(record.get(i).getAmount(), record.get(i).getDate(),name));
                             }
-                            else{ //5일 이내일때
-                                toGraph.add(0,new Graph(record.get(i).getAmount(),record.get(i).getDate(),friendsranking.get(position).getName()));
+                        }
+                        Intent intent = new Intent(mainActivity, PopActivity.class);
+                        intent.putExtra("data", toGraph);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<RecordModel>> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
+
+        mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(mainActivity, mRecyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, final int position) {
+                NetworkHelper.getInstance().Record(friendsranking.get(position).getToken()).enqueue(new Callback<ArrayList<RecordModel>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<RecordModel>> call, Response<ArrayList<RecordModel>> response) {
+                        record = response.body();
+                        toGraph = new ArrayList<>();
+                        Log.e("amount", String.valueOf(record.get(0).getAmount()));
+                        for (int i = 0; i < record.size(); i++) {
+                            Date secondDate = null;
+                            try {
+
+                                secondDate = format.parse(record.get(i).getDate());
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            long calDate = now.getTime() - secondDate.getTime();
+                            long calDateDays = calDate / (24 * 60 * 60 * 1000);
+                            String time1 = format.format(now);
+                            String time2 = format.format(secondDate);
+                            Log.e("time1", time1);
+                            Log.e("time2", time2);
+                            Log.e("날짜차이", "Record[" + i + "] 의 날짜차이 : " + String.valueOf(calDateDays));
+                            if (calDateDays > 5) {
+                                break;
+                            } else { //5일 이내일때
+                                toGraph.add(0, new Graph(record.get(i).getAmount(), record.get(i).getDate(), friendsranking.get(position).getName()));
                             }
                         }
                         Intent intent = new Intent(mainActivity, PopActivity.class);

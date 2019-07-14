@@ -7,51 +7,65 @@
     android:background="#f7f7f7"
     tools:context=".fragment.FriendsFragment">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/myPic"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="22dp"
-        app:layout_constraintLeft_toLeftOf="parent"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="#fff"
         app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/myPro"
+        android:layout_height="68dp">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="#000"
+            android:id="@+id/myPic"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginLeft="20dp"
+            />
 
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:fontFamily="@font/nanumgothic_bold"
+            android:textColor="#000000"
+            android:lineSpacingExtra="2sp"
+            android:text="김민준"
+            android:id="@+id/myName"
+            app:layout_constraintTop_toTopOf="@id/myPic"
+            app:layout_constraintBottom_toBottomOf="@id/myPic"
+            app:layout_constraintLeft_toRightOf="@id/myPic"
+            android:layout_marginLeft="12dp"
+            />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:lineSpacingExtra="2sp"
-        android:text="김민준"
-        android:textColor="#000000"
-        android:id="@+id/myName"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@id/myPic"
-        app:layout_constraintLeft_toRightOf="@id/myPic"
-        app:layout_constraintTop_toTopOf="@id/myPic"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/friendDoing"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginRight="16dp"
+            android:src="#009111"
+            app:layout_constraintTop_toTopOf="@id/myPic"
+            app:layout_constraintBottom_toBottomOf="@id/myPic"
+            app:layout_constraintRight_toRightOf="parent"
 
-        />
-
-
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/myDoing"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        android:layout_marginRight="16dp"
-        android:src="#009111"
-        app:layout_constraintBottom_toBottomOf="@id/myPic"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/myPic" />
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#ebb42c"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </android.support.constraint.ConstraintLayout>
 
     <ImageView
         android:id="@+id/friends"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="22dp"
+
         android:background="#ebb42c"
-        app:layout_constraintTop_toBottomOf="@id/myPic" />
+        app:layout_constraintTop_toBottomOf="@id/myPro" />
 
 
     <TextView
