@@ -99,7 +99,7 @@ public class LoginCallback implements FacebookCallback<LoginResult> {
                             editor.commit();
 
                             LoginActivity.register(context,name,facebookId,"http://graph.facebook.com/"+facebookId+"/picture?type=large");
-                            Log.e("::prefcheck::", pref.getString("name","none data"));
+
 
                         } catch (JSONException e) {
 

@@ -2,6 +2,7 @@ package com.kmj.studify.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.kmj.studify.NetworkHelper;
@@ -34,7 +36,7 @@ public class RankingFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
     private RankingAdapter rankingAdapter;
-
+    SwipeRefreshLayout swipeRefreshLayout;
     CircleImageView circleImageView;
     TextView avg;
     TextView max;
@@ -55,6 +57,7 @@ public class RankingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View v = inflater.inflate(R.layout.fragment_ranking, container, false);
         mainActivity= (MainActivity) getActivity();
         circleImageView=v.findViewById(R.id.rank_1st);
@@ -66,6 +69,20 @@ public class RankingFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
         ranking=new ArrayList<>();
+        Refresh();
+
+        swipeRefreshLayout=v.findViewById(R.id.ranking_refreshlayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Refresh();
+            }
+        });
+
+
+        return v;
+    }
+    public void Refresh(){
         NetworkHelper.getInstance().Ranking().enqueue(new Callback<ArrayList<UserModel>>() {
             @Override
             public void onResponse(Call<ArrayList<UserModel>> call, Response<ArrayList<UserModel>> response) {
@@ -95,17 +112,16 @@ public class RankingFragment extends Fragment {
 
                 rankingAdapter=new RankingAdapter(ranking,mainActivity);
                 mRecyclerView.setAdapter(rankingAdapter);
+                Log.e("asdf","refresh");
+                swipeRefreshLayout.setRefreshing(false);
+
             }
 
             @Override
             public void onFailure(Call<ArrayList<UserModel>> call, Throwable t) {
-                Log.e("ohmygoderrror",t.toString());
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
-
-
-
-        return v;
     }
 
 }

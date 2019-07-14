@@ -28,6 +28,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 
 public class LoginActivity extends AppCompatActivity {
     private LoginButton btn_facebook_login;
@@ -88,10 +90,9 @@ public class LoginActivity extends AppCompatActivity {
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
         SharedPreferences pref = getApplicationContext().getSharedPreferences("pref", MODE_PRIVATE);
         Log.e("pref check::",pref.getString("name","no data??"));
-        String name = pref.getString("name", "");
-        String facebookId = pref.getString("facebookId", "");
-        String profileURL = pref.getString("profileURL", "");
-        Log.e("pref check:: name::::",name);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
         finish();
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -107,8 +108,11 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString("MyUserToken",mytoken);
                 editor.commit();
 
-                Intent intent = new Intent(context, MainActivity.class);
-                context.startActivity(intent);
+
+
+
+
+
 
             }
 
