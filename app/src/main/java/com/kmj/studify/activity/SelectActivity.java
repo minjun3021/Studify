@@ -44,7 +44,12 @@ public class SelectActivity extends Activity implements SelectAdapter.OnItemClic
         add=findViewById(R.id.select_add);
         ok=findViewById(R.id.select_ok);
         subject=new ArrayList<>();
+
         loadData();
+        if(subject.size()==0){
+            addDefaultData();
+            saveData();
+        }
         mAdapter=new SelectAdapter(this,subject,R.layout.select_item);
         listview.setAdapter(mAdapter);
         add.setOnClickListener(new View.OnClickListener() {
@@ -145,6 +150,15 @@ public class SelectActivity extends Activity implements SelectAdapter.OnItemClic
         if (shareditems != null) {
             subject.addAll(shareditems);
         }
+    }
+    public void addDefaultData(){
+        subject.add(new Subject("수학",false));
+        subject.add(new Subject("국어",false));
+        subject.add(new Subject("영어",false));
+        subject.add(new Subject("과학",false));
+        subject.add(new Subject("사회",false));
+        subject.add(new Subject("한국사",false));
+        subject.add(new Subject("일본어",false));
     }
 }
 
