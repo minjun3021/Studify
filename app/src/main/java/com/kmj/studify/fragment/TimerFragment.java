@@ -74,6 +74,7 @@ public class TimerFragment extends Fragment implements SensorEventListener {
 
         SharedPreferences pref = mainActivity.getSharedPreferences("pref", MODE_PRIVATE);
         myToken = pref.getString("MyUserToken", "");
+        Log.e("timerfragmenttoken",myToken);
         View v = inflater.inflate(R.layout.fragment_timer, container, false);
         subject = v.findViewById(R.id.subject);
 
@@ -149,15 +150,12 @@ public class TimerFragment extends Fragment implements SensorEventListener {
                 isStarted = true;
                 vibrator.vibrate(500);
                 Log.e("token", myToken);
-                String Subject = subject.getText().toString();
-                if (Subject.equals("공부 선택")) {
-                    Subject = "공부";
-                }
-                NetworkHelper.getInstance().Start(myToken, Subject).enqueue(new Callback<StartModel>() {
+                String subject1 = subject.getText().toString();
+
+                NetworkHelper.getInstance().Start(myToken, subject1).enqueue(new Callback<StartModel>() {
                     @Override
                     public void onResponse(Call<StartModel> call, Response<StartModel> response) {
-                        Log.e("amount", String.valueOf(response.body().getAmount()));
-                        Log.e("current", response.body().getMessage());
+
                         Window mywindow = mainActivity.getWindow();
                         WindowManager.LayoutParams lp = mywindow.getAttributes();
                         lp.screenBrightness = 0;
@@ -181,7 +179,6 @@ public class TimerFragment extends Fragment implements SensorEventListener {
                 NetworkHelper.getInstance().End(myToken).enqueue(new Callback<EndModel>() {
                     @Override
                     public void onResponse(Call<EndModel> call, Response<EndModel> response) {
-                        Log.e("amount", String.valueOf(response.body().getAmount()));
                         Window mywindow = mainActivity.getWindow();
                         WindowManager.LayoutParams lp = mywindow.getAttributes();
                         lp.screenBrightness = 1;

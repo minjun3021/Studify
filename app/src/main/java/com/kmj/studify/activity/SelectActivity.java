@@ -2,6 +2,7 @@ package com.kmj.studify.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.kmj.studify.R;
 import com.kmj.studify.adapter.SelectAdapter;
 import com.kmj.studify.data.Subject;
@@ -41,6 +44,7 @@ public class SelectActivity extends Activity implements SelectAdapter.OnItemClic
         add=findViewById(R.id.select_add);
         ok=findViewById(R.id.select_ok);
         subject=new ArrayList<>();
+        loadData();
         mAdapter=new SelectAdapter(this,subject,R.layout.select_item);
         listview.setAdapter(mAdapter);
         add.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +55,7 @@ public class SelectActivity extends Activity implements SelectAdapter.OnItemClic
                 editText.setText("");
                 Log.e("click",subject.size()+"");
                 mAdapter.notifyDataSetChanged();
+                saveData();
             }
         });
     listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -99,6 +104,7 @@ public class SelectActivity extends Activity implements SelectAdapter.OnItemClic
     public void itemDelete(int position) {
         subject.remove(position);
         mAdapter.notifyDataSetChanged();
+        saveData();
     }
 
     @Override
@@ -109,6 +115,7 @@ public class SelectActivity extends Activity implements SelectAdapter.OnItemClic
 
         subject.add(temp);
         mAdapter.notifyDataSetChanged();
+        saveData();
     }
 
     @Override
@@ -117,6 +124,28 @@ public class SelectActivity extends Activity implements SelectAdapter.OnItemClic
         subject.remove(position);
         temp.setBookmarked(true);
         subject.add(0,temp);
+        saveData();
         mAdapter.notifyDataSetChanged();
     }
+    public void saveData() {
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        String json = new Gson().toJson(subject);
+        editor.putString("data", json);
+        editor.commit();
+    }
+
+    public void loadData() {
+        Gson gson = new Gson();
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        String json = pref.getString("data", "");
+        ArrayList<Subject> shareditems;
+        shareditems = gson.fromJson(json, new TypeToken<ArrayList<Subject>>() {
+        }.getType());
+        if (shareditems != null) {
+            subject.addAll(shareditems);
+        }
+    }
 }
+
+

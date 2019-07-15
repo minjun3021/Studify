@@ -30,6 +30,7 @@
             android:fontFamily="@font/nanumgothic_regular"
             android:text="님의 최근 5일"
             android:textColor="#fff"
+            android:id="@+id/pop_day"
             android:textSize="20sp"
 
             />

@@ -103,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                 Log.e("registerresponse", response.toString());
                 SharedPreferences.Editor editor = pref.edit();
                 String mytoken=response.body().getUserModel().getToken();
+                Log.e("token",mytoken);
                 editor.putString("MyUserToken",mytoken);
                 editor.commit();
 

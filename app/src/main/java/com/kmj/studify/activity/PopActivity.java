@@ -4,14 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Description;
@@ -31,25 +30,33 @@ public class PopActivity extends Activity {
     BarChart chart;
     ArrayList<Graph> record;
     TextView textView;
+    TextView day;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_pop);
 
-        Intent intent=getIntent();
-        record=(ArrayList<Graph>)intent.getSerializableExtra("data");
-        btn=findViewById(R.id.pop_btn);
-        textView=findViewById(R.id.pop_text);
-        textView.setText(record.get(0).getName());
+        Intent intent = getIntent();
+        record = (ArrayList<Graph>) intent.getSerializableExtra("data");
+        Log.e("poprecord", record.size() + "");
+        btn = findViewById(R.id.pop_btn);
+        day=findViewById(R.id.pop_day);
+        textView = findViewById(R.id.pop_text);
+        if (record != null) {
+            if (record.size() != 0) {
+                textView.setText(record.get(0).getName());
+                day.setText("님의 최근 "+record.size()+"일");
+            }
+        }
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        chart=findViewById(R.id.bar);
-        Description desc ;
+        chart = findViewById(R.id.bar);
+        Description desc;
         Legend L;
 
         L = chart.getLegend();
@@ -66,15 +73,17 @@ public class PopActivity extends Activity {
 
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTextSize(8f);
-        xAxis.setLabelCount(record.size(),false);
+        xAxis.setLabelCount(record.size(), false);
         xAxis.setDrawAxisLine(true);
         xAxis.setDrawGridLines(false);
-        String[] values = new String[5];
-        for(int i=0; i<record.size(); i++){
-            String date=record.get(i).getDate();
-            String month=date.substring(4,6);
-            String day=date.substring(6,8);
-            values[i]=month+"월 "+day+"일";
+        String[] values = new String[]{"", "", "", "", "",""};
+
+
+        for (int i = 0; i < record.size(); i++) {
+            String date = record.get(i).getDate();
+            String month = date.substring(4, 6);
+            String day = date.substring(6, 8);
+            values[i] = month + "월 " + day + "일";
         }
 
         xAxis.setValueFormatter(new com.github.mikephil.charting.formatter.IndexAxisValueFormatter(values));
@@ -111,26 +120,22 @@ public class PopActivity extends Activity {
     private BarDataSet setData() {
 
         ArrayList<BarEntry> entries = new ArrayList<>();
-        for(int i=0; i<record.size(); i++){
-            entries.add(new BarEntry(i, (float) (record.get(i).getAmount()/3600)));
+        for (int i = 0; i < record.size(); i++) {
+            entries.add(new BarEntry(i, (float) (record.get(i).getAmount() / 3600)));
         }
-
-
-
-
 
 
         BarDataSet set = new BarDataSet(entries, "");
         set.setColor(Color.rgb(155, 155, 155));
         set.setValueTextSize(10f);
-        set.setValueTextColor(Color.rgb(155,155,155));
+        set.setValueTextColor(Color.rgb(155, 155, 155));
 
         return set;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if(event.getAction()==MotionEvent.ACTION_OUTSIDE){
+        if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
             return false;
         }
         return true;

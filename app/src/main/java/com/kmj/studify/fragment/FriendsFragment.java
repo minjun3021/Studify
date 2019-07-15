@@ -94,6 +94,7 @@ public class FriendsFragment extends Fragment {
         String facebookId = pref.getString("facebookId", "");
         String profileURL = pref.getString("profileURL", "");
         myToken=pref.getString("MyUserToken","");
+        Log.e("friendsfragment",myToken);
         tvname = v.findViewById(R.id.myName);
         tvname.setText(name);
         Glide.with(mainActivity)
@@ -246,12 +247,14 @@ public class FriendsFragment extends Fragment {
                             Log.e("time1", time1);
                             Log.e("time2", time2);
                             Log.e("날짜차이", "Record[" + i + "] 의 날짜차이 : " + String.valueOf(calDateDays));
-                            if (calDateDays > 5) {
+                            if (calDateDays >3) {
                                 break;
                             } else { //5일 이내일때
                                 toGraph.add(0, new Graph(record.get(i).getAmount(), record.get(i).getDate(),name));
                             }
                         }
+
+
                         Intent intent = new Intent(mainActivity, PopActivity.class);
                         intent.putExtra("data", toGraph);
                         startActivity(intent);
