@@ -14,10 +14,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".activity.SelectActivity"
-            android:theme="@android:style/Theme.Dialog">
-
-        </activity>
+        <activity
+            android:name=".activity.StudyfinishActivity"
+            android:theme="@android:style/Theme.Dialog"></activity>
+        <activity
+            android:name=".activity.SelectActivity"
+            android:theme="@android:style/Theme.Dialog"></activity>
         <activity
             android:name=".activity.PopActivity"
             android:theme="@android:style/Theme.Dialog" />

@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.kmj.studify.R;
 import com.kmj.studify.activity.MainActivity;
 import com.kmj.studify.activity.SelectActivity;
+import com.kmj.studify.activity.StudyfinishActivity;
 import com.kmj.studify.data.EndModel;
 import com.kmj.studify.data.StartModel;
 import com.kmj.studify.retrofit.NetworkHelper;
@@ -183,6 +184,10 @@ public class TimerFragment extends Fragment implements SensorEventListener {
                         WindowManager.LayoutParams lp = mywindow.getAttributes();
                         lp.screenBrightness = 1;
                         mywindow.setAttributes(lp);
+
+                        Intent intent=new Intent(mainActivity, StudyfinishActivity.class);
+                        intent.putExtra("amount",response.body().getAmount());
+                        startActivity(intent);
                     }
 
                     @Override
