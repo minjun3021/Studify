@@ -2,9 +2,12 @@ package com.kmj.studify.activity;
 
 
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
@@ -13,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -44,6 +48,25 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Fragment> fragments;
     FragmentUtils fragmentUtils;
     ImageView ti,fi,ri;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==R.id.lock){
+
+            Intent intent=new Intent(MainActivity.this,LockSetActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,11 +82,11 @@ public class MainActivity extends AppCompatActivity {
         fi=findViewById(R.id.friends_img);
         ri=findViewById(R.id.ranking_img);
 
+        if (!Settings.canDrawOverlays(this)) {
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
+            startActivityForResult(intent, 1);
+        }
 
-//
-//        Intent intent = getIntent();
-//        RegisterModel registerModel=(RegisterModel)intent.getSerializableExtra("registerModel");
-        //Log.e("mymytoken",registerModel.getUserModel().getToken());
         fragments = new ArrayList<>();
         timerFragment = new TimerFragment();
         rankingFragment = new RankingFragment();

@@ -247,7 +247,7 @@ public class FriendsFragment extends Fragment {
                             Log.e("time1", time1);
                             Log.e("time2", time2);
                             Log.e("날짜차이", "Record[" + i + "] 의 날짜차이 : " + String.valueOf(calDateDays));
-                            if (calDateDays >3) {
+                            if (calDateDays >5) {
                                 break;
                             } else { //5일 이내일때
                                 toGraph.add(0, new Graph(record.get(i).getAmount(), record.get(i).getDate(),name));

@@ -62,7 +62,7 @@ public class PopActivity extends Activity {
         L = chart.getLegend();
         desc = chart.getDescription();
         desc.setTextAlign(Paint.Align.CENTER);
-        desc.setText("시간"); // this is the weirdest way to clear something!!
+        desc.setText("시간");
         L.setEnabled(false);
 
 
@@ -76,7 +76,7 @@ public class PopActivity extends Activity {
         xAxis.setLabelCount(record.size(), false);
         xAxis.setDrawAxisLine(true);
         xAxis.setDrawGridLines(false);
-        String[] values = new String[]{"", "", "", "", "",""};
+        String[] values = new String[]{"", "", "", "", "","","","",""};
 
 
         for (int i = 0; i < record.size(); i++) {
