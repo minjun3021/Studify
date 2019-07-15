@@ -19,9 +19,9 @@ import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
-import com.kmj.studify.FriendsAdapter;
-import com.kmj.studify.NetworkHelper;
-import com.kmj.studify.PopActivity;
+import com.kmj.studify.adapter.FriendsAdapter;
+import com.kmj.studify.retrofit.NetworkHelper;
+import com.kmj.studify.activity.PopActivity;
 import com.kmj.studify.R;
 import com.kmj.studify.RecyclerTouchListener;
 import com.kmj.studify.activity.MainActivity;
@@ -230,7 +230,7 @@ public class FriendsFragment extends Fragment {
                     public void onResponse(Call<ArrayList<RecordModel>> call, Response<ArrayList<RecordModel>> response) {
                         record = response.body();
                         toGraph = new ArrayList<>();
-                        Log.e("amount", String.valueOf(record.get(0).getAmount()));
+
                         for (int i = 0; i < record.size(); i++) {
                             Date secondDate = null;
                             try {

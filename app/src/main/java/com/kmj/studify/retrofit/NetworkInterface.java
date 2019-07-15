@@ -1,4 +1,4 @@
-package com.kmj.studify;
+package com.kmj.studify.retrofit;
 
 
 import com.kmj.studify.data.EndModel;

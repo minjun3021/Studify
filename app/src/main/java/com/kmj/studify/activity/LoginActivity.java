@@ -18,7 +18,7 @@ import com.facebook.CallbackManager;
 import com.facebook.login.LoginManager;
 import com.facebook.login.widget.LoginButton;
 import com.kmj.studify.LoginCallback;
-import com.kmj.studify.NetworkHelper;
+import com.kmj.studify.retrofit.NetworkHelper;
 import com.kmj.studify.R;
 import com.kmj.studify.data.RegisterModel;
 
@@ -27,8 +27,6 @@ import java.util.Arrays;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 
 public class LoginActivity extends AppCompatActivity {

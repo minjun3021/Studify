@@ -1,4 +1,4 @@
-package com.kmj.studify;
+package com.kmj.studify.retrofit;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

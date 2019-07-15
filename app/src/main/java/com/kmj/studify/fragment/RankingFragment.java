@@ -9,20 +9,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.kmj.studify.NetworkHelper;
+import com.kmj.studify.retrofit.NetworkHelper;
 import com.kmj.studify.R;
-import com.kmj.studify.RankingAdapter;
+import com.kmj.studify.adapter.RankingAdapter;
 import com.kmj.studify.activity.MainActivity;
 import com.kmj.studify.data.UserModel;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;

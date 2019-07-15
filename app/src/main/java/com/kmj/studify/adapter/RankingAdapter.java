@@ -1,4 +1,4 @@
-package com.kmj.studify;
+package com.kmj.studify.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.kmj.studify.R;
 import com.kmj.studify.activity.MainActivity;
 import com.kmj.studify.data.UserModel;
 

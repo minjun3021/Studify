@@ -3,6 +3,7 @@ package com.kmj.studify.fragment;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -19,12 +20,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.kmj.studify.NetworkHelper;
+import com.kmj.studify.activity.PopActivity;
+import com.kmj.studify.activity.SelectActivity;
+import com.kmj.studify.data.Subject;
+import com.kmj.studify.retrofit.NetworkHelper;
 import com.kmj.studify.R;
 import com.kmj.studify.activity.MainActivity;
 import com.kmj.studify.data.EndModel;
@@ -104,7 +107,8 @@ public class TimerFragment extends Fragment implements SensorEventListener {
             @Override
             public void onClick(View v) {
                 subject.setText("공부 선택");
-                show();
+                Intent intent=new Intent(mainActivity,SelectActivity.class);
+                startActivityForResult(intent,3000);
             }
         });
 
@@ -112,6 +116,11 @@ public class TimerFragment extends Fragment implements SensorEventListener {
         return v;
 
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -220,47 +229,8 @@ public class TimerFragment extends Fragment implements SensorEventListener {
         sensorManager.unregisterListener(this);
     }
 
-    void show()
-    {
-        final List<String> ListItems = new ArrayList<>();
-        ListItems.add("수학");
-        ListItems.add("국어");
-        ListItems.add("영어");
-        ListItems.add("과학");
-        ListItems.add("사회");
-        ListItems.add("한국사");
-        ListItems.add("일본어");
-        final CharSequence[] items =  ListItems.toArray(new String[ ListItems.size()]);
 
-        final List SelectedItems  = new ArrayList();
-        int defaultItem = 0;
-        SelectedItems.add(defaultItem);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity);
-        builder.setTitle("공부 선택");
-        builder.setSingleChoiceItems(items, defaultItem,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SelectedItems.clear();
-                        SelectedItems.add(which);
-                    }
-                });
-        builder.setPositiveButton("Ok",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        String msg="";
-
-                        if (!SelectedItems.isEmpty()) {
-                            int index = (int) SelectedItems.get(0);
-                            msg = ListItems.get(index);
-                        }
-                        subject.setText(msg);
-                    }
-                });
-        builder.setCancelable(false);
-        builder.show();
-    }
 
     public  void On(){
         sensorManager.registerListener(this,

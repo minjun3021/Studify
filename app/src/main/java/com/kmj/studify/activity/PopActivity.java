@@ -1,4 +1,4 @@
-package com.kmj.studify;
+package com.kmj.studify.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,6 +21,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.kmj.studify.R;
 import com.kmj.studify.data.Graph;
 
 import java.util.ArrayList;

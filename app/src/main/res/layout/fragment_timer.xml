@@ -3,21 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/stopwatch"
+    android:background="#fff"
     android:layout_height="match_parent"
     tools:context=".fragment.TimerFragment">
 
 
     <ImageView
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:src="@drawable/select"
+        android:layout_width="187dp"
+        android:layout_height="187dp"
+        android:src="@drawable/start"
         android:id="@+id/timer_select"
         android:scaleType="fitXY"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
         />
     <TextView
         android:layout_width="100dp"
@@ -41,12 +41,20 @@
         android:textSize="16sp"
         android:id="@+id/timer_tv1"
         android:textColor="#c99613"
-        android:layout_marginTop="32dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/timer_select"
+        app:layout_constraintBottom_toTopOf="@id/timer_bottom"
         app:layout_constraintRight_toRightOf="parent"
         android:fontFamily="@font/nanumgothic_regular"
         android:text="스마트폰을 뒤집어 공부를 시작해보세요!"
         />
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/timer_bottom"
+        android:src="@drawable/bottom"
+        app:layout_constraintDimensionRatio="18:7"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 </android.support.constraint.ConstraintLayout>

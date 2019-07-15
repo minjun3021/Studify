@@ -14,7 +14,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".PopActivity" android:theme="@android:style/Theme.Dialog"></activity>
+        <activity android:name=".activity.SelectActivity"
+            android:theme="@android:style/Theme.Dialog">
+
+        </activity>
+        <activity
+            android:name=".activity.PopActivity"
+            android:theme="@android:style/Theme.Dialog" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -43,8 +49,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity"></activity>
-        <activity android:name=".activity.LoginActivity"></activity>
+        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.LoginActivity" />
     </application>
 
 </manifest>

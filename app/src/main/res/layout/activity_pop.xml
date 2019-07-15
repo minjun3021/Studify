@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="#fff"
     android:orientation="vertical"
-    tools:context=".PopActivity">
+    tools:context=".activity.PopActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
