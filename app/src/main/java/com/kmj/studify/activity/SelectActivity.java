@@ -1,6 +1,7 @@
 package com.kmj.studify.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -65,7 +66,13 @@ public class SelectActivity extends Activity implements SelectAdapter.OnItemClic
         @Override
         public void onClick(View v) {
             if(select && subject.size()>0){
-                Toast.makeText(SelectActivity.this, subject.get(selectItemPosition).getName(), Toast.LENGTH_SHORT).show();
+
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("subName",subject.get(selectItemPosition).getName());
+                setResult(RESULT_OK,resultIntent);
+                finish();
+
+
             }
             else{
                 Toast.makeText(SelectActivity.this, "과목을 선택하고 누르세요.", Toast.LENGTH_SHORT).show();

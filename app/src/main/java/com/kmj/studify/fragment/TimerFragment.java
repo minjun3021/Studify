@@ -1,8 +1,6 @@
 package com.kmj.studify.fragment;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
@@ -24,22 +22,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.kmj.studify.activity.PopActivity;
-import com.kmj.studify.activity.SelectActivity;
-import com.kmj.studify.data.Subject;
-import com.kmj.studify.retrofit.NetworkHelper;
 import com.kmj.studify.R;
 import com.kmj.studify.activity.MainActivity;
+import com.kmj.studify.activity.SelectActivity;
 import com.kmj.studify.data.EndModel;
 import com.kmj.studify.data.StartModel;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.kmj.studify.retrofit.NetworkHelper;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
 public class TimerFragment extends Fragment implements SensorEventListener {
@@ -50,10 +44,10 @@ public class TimerFragment extends Fragment implements SensorEventListener {
     Sensor proximitySensor;
     Handler mHandler;
     Sensor lightSensor;
-    boolean isStarted=false;
-    boolean isnear=false;
+    boolean isStarted = false;
+    boolean isnear = false;
     ImageView select;
-    int light=1000;
+    int light = 1000;
     TextView subject;
     private Vibrator vibrator;
     String myToken;
@@ -76,18 +70,18 @@ public class TimerFragment extends Fragment implements SensorEventListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mainActivity = (MainActivity) getActivity();
-        vibrator = (Vibrator)mainActivity.getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator = (Vibrator) mainActivity.getSystemService(Context.VIBRATOR_SERVICE);
 
         SharedPreferences pref = mainActivity.getSharedPreferences("pref", MODE_PRIVATE);
-        myToken=pref.getString("MyUserToken", "");
+        myToken = pref.getString("MyUserToken", "");
         View v = inflater.inflate(R.layout.fragment_timer, container, false);
-        subject=v.findViewById(R.id.subject);
+        subject = v.findViewById(R.id.subject);
 
-        select=v.findViewById(R.id.timer_select);
-        sensorManager = (SensorManager)mainActivity.getSystemService(mainActivity.SENSOR_SERVICE);
+        select = v.findViewById(R.id.timer_select);
+        sensorManager = (SensorManager) mainActivity.getSystemService(mainActivity.SENSOR_SERVICE);
         proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
-        lightSensor=sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
-        if(proximitySensor == null) {
+        lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+        if (proximitySensor == null) {
             Toast.makeText(mainActivity, "No Proximity Sensor Found", Toast.LENGTH_SHORT).show();
         }
         mHandler = new Handler() {
@@ -101,14 +95,13 @@ public class TimerFragment extends Fragment implements SensorEventListener {
             }
 
 
-
         };
         select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 subject.setText("공부 선택");
-                Intent intent=new Intent(mainActivity,SelectActivity.class);
-                startActivityForResult(intent,3000);
+                Intent intent = new Intent(mainActivity, SelectActivity.class);
+                startActivityForResult(intent, 3000);
             }
         });
 
@@ -116,47 +109,55 @@ public class TimerFragment extends Fragment implements SensorEventListener {
         return v;
 
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case 3000:
+                    subject.setText(data.getStringExtra("subName"));
+                    break;
+            }
+        }
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        if(event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
-            if(event.values[0] == 0) {
-                isnear=true;
-                Log.e("Near : ",String.valueOf(event.values[0]));
+        if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
+            if (event.values[0] == 0) {
+                isnear = true;
+                Log.e("Near : ", String.valueOf(event.values[0]));
             } else {
-                isnear=false;
-                Log.e("Far : ",String.valueOf(event.values[0]));
+                isnear = false;
+                Log.e("Far : ", String.valueOf(event.values[0]));
             }
-        }
-        else if(event.sensor.getType()==Sensor.TYPE_LIGHT){
+        } else if (event.sensor.getType() == Sensor.TYPE_LIGHT) {
             float lightLux = event.values[0];
-            lightLux = (float) (Math.round(lightLux * 100)/100.0);
+            lightLux = (float) (Math.round(lightLux * 100) / 100.0);
             int color = (int) lightLux;
-            light=color;
+            light = color;
 
 
         }
 
-        if(isnear && light<2){
-            if(isStarted==false){
+        if (isnear && light < 2) {
+            if (isStarted == false) {
                 mHandler.sendEmptyMessage(0);
-                isStarted=true;
+                isStarted = true;
                 vibrator.vibrate(500);
-                Log.e("token",myToken);
-                String Subject=subject.getText().toString();
-                if(Subject.equals("공부 선택")){
-                    Subject="공부";
+                Log.e("token", myToken);
+                String Subject = subject.getText().toString();
+                if (Subject.equals("공부 선택")) {
+                    Subject = "공부";
                 }
-                NetworkHelper.getInstance().Start(myToken,Subject).enqueue(new Callback<StartModel>() {
+                NetworkHelper.getInstance().Start(myToken, Subject).enqueue(new Callback<StartModel>() {
                     @Override
                     public void onResponse(Call<StartModel> call, Response<StartModel> response) {
-                        Log.e("amount",String.valueOf(response.body().getAmount()));
-                        Log.e("current",response.body().getMessage());
+                        Log.e("amount", String.valueOf(response.body().getAmount()));
+                        Log.e("current", response.body().getMessage());
                         Window mywindow = mainActivity.getWindow();
                         WindowManager.LayoutParams lp = mywindow.getAttributes();
                         lp.screenBrightness = 0;
@@ -167,21 +168,20 @@ public class TimerFragment extends Fragment implements SensorEventListener {
 
                     @Override
                     public void onFailure(Call<StartModel> call, Throwable t) {
-                        Log.e("Ohmygoderror",t.toString());
+                        Log.e("Ohmygoderror", t.toString());
                     }
                 });
             }
 
-        }
-        else{
-            if(isStarted){
-                isStarted=false;
+        } else {
+            if (isStarted) {
+                isStarted = false;
                 mHandler.removeCallbacksAndMessages(null);
                 vibrator.vibrate(500);
                 NetworkHelper.getInstance().End(myToken).enqueue(new Callback<EndModel>() {
                     @Override
                     public void onResponse(Call<EndModel> call, Response<EndModel> response) {
-                        Log.e("amount",String.valueOf(response.body().getAmount()));
+                        Log.e("amount", String.valueOf(response.body().getAmount()));
                         Window mywindow = mainActivity.getWindow();
                         WindowManager.LayoutParams lp = mywindow.getAttributes();
                         lp.screenBrightness = 1;
@@ -230,9 +230,7 @@ public class TimerFragment extends Fragment implements SensorEventListener {
     }
 
 
-
-
-    public  void On(){
+    public void On() {
         sensorManager.registerListener(this,
                 sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY),
                 SensorManager.SENSOR_DELAY_NORMAL);
@@ -243,7 +241,7 @@ public class TimerFragment extends Fragment implements SensorEventListener {
 
     }
 
-    public void Off(){
+    public void Off() {
 
         sensorManager.unregisterListener(this);
     }
