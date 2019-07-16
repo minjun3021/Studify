@@ -140,12 +140,13 @@ public class TimerFragment extends Fragment implements SensorEventListener {
             float lightLux = event.values[0];
             lightLux = (float) (Math.round(lightLux * 100) / 100.0);
             int color = (int) lightLux;
+
             light = color;
 
 
         }
 
-        if (isnear && light < 2) {
+        if (isnear && light < 5 || light<1) {
             if (isStarted == false) {
                 mHandler.sendEmptyMessage(0);
                 isStarted = true;

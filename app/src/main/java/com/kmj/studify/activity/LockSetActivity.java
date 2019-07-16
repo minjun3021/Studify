@@ -60,8 +60,16 @@ public class LockSetActivity extends Activity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (Settings.canDrawOverlays(this)) {
                 Intent intent = new Intent(LockSetActivity.this, AlwaysOnTopService.class);
-                intent.putExtra("Hour",hours.getText().toString());
-                intent.putExtra("Minute",mins.getText().toString());
+                String hour=hours.getText().toString();
+                String min=mins.getText().toString();
+                if(hour.equals("")){
+                    hour="0";
+                }
+                if (min.equals("")){
+                    min="0";
+                }
+                intent.putExtra("Hour",hour);
+                intent.putExtra("Minute",min);
                 startService(intent);
             }
 
